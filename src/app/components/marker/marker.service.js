@@ -2,7 +2,7 @@
 
 angular
 .module("gisproject")
-.service("markerService", MarkerService);
+.service("MarkerService", MarkerService);
 /** @ngInject */
 function MarkerService($http)
 {
