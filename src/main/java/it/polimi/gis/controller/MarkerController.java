@@ -25,6 +25,7 @@ public class MarkerController {
 	        @org.springframework.web.bind.annotation.RequestBody
 	        Marker[] markerArray) {
 	    	
+	    	System.out.println("Lungh"+markerArray.length);
 	    	
 	    	
 	        return ResponseEntity.ok().body(null);
