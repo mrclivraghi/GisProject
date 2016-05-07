@@ -6,7 +6,7 @@
     .controller('MainController', MainController);
 
   /** @ngInject */
-  function MainController($scope) {
+  function MainController($scope,MarkerService) {
     var vm = this;
 	vm.markersCount=0;
 	vm.events= {
@@ -41,8 +41,21 @@ $scope.$on('leafletDirectiveMap.click', function(event, args){
 		};
 	}
 	
+	function sendMarker()
+	{
+		MarkerService.send(vm.markers).then(function successCallback(response) {
+				console.log(response);
+},function errorCallback(response) { 
+	console.log("error");
+	return; 
+});
+	
+	}
+	
+	
 	
 	vm.addMarker=addMarker;
+	vm.sendMarker=sendMarker;
 	
 	
     }
