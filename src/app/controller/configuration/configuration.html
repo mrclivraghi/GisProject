@@ -1,0 +1,65 @@
+<gis-navbar></gis-navbar>
+<div class="container">
+
+	<div class="row">
+		<div class="col-md-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					Configuration
+				</div>
+				<div class="panel-body">
+				
+				<div class="row">
+				
+					<div class="col-md-3 col-md-offset-1">
+						class1
+						<div ng-repeat="class1 in vm.class1">
+							<label>
+								<input type="checkbox" ng-model="vm.selectionValue[class1]">  {{class1}}
+							</label>
+						</div>
+					</div>
+					<div class="col-md-3  col-md-offset-1">
+						class2
+						<div ng-repeat="class2 in vm.class2">
+							<label>
+								<input type="checkbox" ng-model="vm.selectionValue[class2]">  {{class2}}
+							</label>
+						</div>
+					</div>
+				</div>
+				<hr>
+				<div class="row">
+					<div class="col-md-10  col-md-offset-1 center-block">
+						<div class="center-block">
+							<div class="input-group">
+								<input type="text" ng-model="vm.associationName" placeholder="Association name" class="form-control">
+								 <span class="input-group-addon" id="basic-addon2" ng-click="vm.associate()">Associate</span>
+							</div>
+						</div>
+					</div>
+					
+				</div>
+				</div> <!-- close panel body -->
+			</div>
+			
+			<div class="panel panel-default">
+						<div class="panel-heading">
+							Association list
+						</div>
+						<div class="panel-body">
+							<uib-accordion>
+			
+								<uib-accordion-group heading="{{association.name}}" ng-repeat="association in $root.associationList">
+									<div ng-repeat="item in association.classList">{{item}}</div>
+								</uib-accordion-group>
+			
+							</uib-accordion>
+						</div>
+					
+					</div>
+			
+		</div>
+	</div>
+
+</div>
