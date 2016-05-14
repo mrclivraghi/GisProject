@@ -26,6 +26,12 @@
 		
 	};
 	
+	
+	vm.wmsUrl;
+	vm.layerName;
+	vm.layer;
+	
+	
 	vm.layers={
 		baselayers: {
                         xyz: {
@@ -34,7 +40,7 @@
                             type: 'xyz'
                         }
                     },
-                    overlays: {
+       overlays: {
                         wms: {
                             name: 'Ecuador adm',
                             type: 'wms',
@@ -45,8 +51,8 @@
                                 format: 'image/png',
                                 transparent: true
                             }
+							}
                         }
-                    }
 	};
 	
 		
@@ -129,12 +135,32 @@ $scope.$on('leafletDirectiveMap.map2.click', function(event, args){
 	
 	}
 	
+	function addLayer()
+	{
+		var newLayer= {
+							name: vm.layerName,
+                            type: 'wms',
+                            visible: true,
+                            url: vm.wmsUrl,
+                            layerParams: {
+                                layers: vm.layer,
+                                format: 'image/png',
+                                transparent: true
+                            }
+		
+		};
+		vm.layers.overlays[vm.layerName]=newLayer;
+	
+	}
+	
+	
 	
 	
 	vm.addMarker1=addMarker1;
 	vm.addMarker2=addMarker2;
 	vm.highLightMarker=highLightMarker;
 	vm.sendMarker=sendMarker;
+	vm.addLayer=addLayer;
 	
 	
     }

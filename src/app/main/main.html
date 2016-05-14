@@ -21,6 +21,34 @@
 		</div>
 	</div>
 	<div class="row">
+	
+	<div class="col-md-4">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				Geoserver layer
+			</div>
+			<div class="panel-body">
+				<div class="input-group">
+					<input type="text" ng-model="vm.wmsUrl" placeholder="Geoserver url" class="form-control">
+					<span class="input-group-addon" id="basic-addon2" >WMS</span>
+				</div>
+				
+				<div class="input-group">
+					<span class="input-group-addon" id="basic-addon2" >Layer name</span>
+					<input type="text" ng-model="vm.layerName" placeholder="Layer name" class="form-control">
+				</div>
+				<div class="input-group">
+					<input type="text" ng-model="vm.layer" placeholder="Layer" class="form-control">
+					<span class="input-group-addon" id="basic-addon2" >Layer</span>
+				</div>
+				<div class="center-block">
+					<input type="button" class="btn btn-default" value="Add" ng-click="vm.addLayer()">
+				</div>
+			</div>
+		
+		
+		</div>
+	</div>
 		<input type="button" class="btn btn-default" ng-click="vm.sendMarker()" value="SEND">
 	
 	</div>
