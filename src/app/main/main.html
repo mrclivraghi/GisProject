@@ -4,10 +4,10 @@
 </div>
 	<div class="row">
 		<div class="col-md-5">
-			<leaflet id="map1" width="100%" height="480px" markers="vm.markers1" layers="vm.layers"></leaflet>
+			<leaflet id="map1" width="100%" height="480px" markers="vm.markers1" layers="vm.layers" lf-center="vm.center1"></leaflet>
 		</div>
 		<div class="col-md-5">
-			<leaflet id="map2" width="100%" height="480px" markers="vm.markers2"></leaflet>
+			<leaflet id="map2" width="100%" height="480px" markers="vm.markers2" lf-center="vm.center2"></leaflet>
 		</div>
 		<div class="col-md-2">
 			<uib-accordion>
@@ -49,8 +49,42 @@
 		
 		</div>
 	</div>
-		<input type="button" class="btn btn-default" ng-click="vm.sendMarker()" value="SEND">
+	
+	
+	<div class="col-md-4">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				Map center
+			</div>
+			<div class="panel-body">
+				<div class="input-group">
+					<input type="text" ng-model="vm.centerLat" placeholder="Latitude" class="form-control">
+					<span class="input-group-addon" id="basic-addon2" >Lat</span>
+				</div>
+				
+				<div class="input-group">
+					<span class="input-group-addon" id="basic-addon2" >Lng</span>
+					<input type="text" ng-model="vm.centerLng" placeholder="Longitude" class="form-control">
+				</div>
+				
+				
+				<div class="center-block">
+				<div class="input-group input-group-btn">
+					<input type="button" class="btn btn-default" value="Center map1" ng-click="vm.center(vm.center1)">
+					<input type="button" class="btn btn-default" value="Center map2" ng-click="vm.center(vm.center2)">
+				</div>
+				</div>
+			</div>
+		
+		
+		</div>
+	</div>
+	
+		
 	
 	</div>
+	
+	
+	<input type="button" class="btn btn-default" ng-click="vm.sendMarker()" value="SEND">
 
 </div>

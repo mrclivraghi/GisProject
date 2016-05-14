@@ -32,6 +32,11 @@
 	vm.layer;
 	
 	
+	vm.center1={ lat:45, lng:9, zoom: 2};
+	vm.center2={ lat:0, lng:0, zoom: 2};
+	vm.centerLat;
+	vm.centerLng;
+	
 	vm.layers={
 		baselayers: {
                         xyz: {
@@ -153,6 +158,14 @@ $scope.$on('leafletDirectiveMap.map2.click', function(event, args){
 	
 	}
 	
+	function center(center)
+	{
+		center.lat=Number(vm.centerLat);
+		center.lng=Number(vm.centerLng);
+		$log.debug(center);
+	
+	}
+	
 	
 	
 	
@@ -161,7 +174,7 @@ $scope.$on('leafletDirectiveMap.map2.click', function(event, args){
 	vm.highLightMarker=highLightMarker;
 	vm.sendMarker=sendMarker;
 	vm.addLayer=addLayer;
-	
+	vm.center=center;
 	
     }
 })();
