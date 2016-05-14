@@ -25,6 +25,30 @@
 	vm.markers2={
 		
 	};
+	
+	vm.layers={
+		baselayers: {
+                        xyz: {
+                            name: 'OpenStreetMap (XYZ)',
+                            url: 'http://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                            type: 'xyz'
+                        }
+                    },
+                    overlays: {
+                        wms: {
+                            name: 'Ecuador adm',
+                            type: 'wms',
+                            visible: true,
+                            url: 'http://ows3.como.polimi.it:8080/geoserver/user18_16/wms',
+                            layerParams: {
+                                layers: 'user18_16:BOL_adm1',
+                                format: 'image/png',
+                                transparent: true
+                            }
+                        }
+                    }
+	};
+	
 		
 $scope.$on('leafletDirectiveMap.map1.click', function(event, args){
 	vm.addMarker1(args.leafletEvent.latlng.lat,args.leafletEvent.latlng.lng);
@@ -48,7 +72,7 @@ $scope.$on('leafletDirectiveMap.map2.click', function(event, args){
 			lng:longitude,
 			focus: true,
 			message: 'Marker #'+vm.markers1Count,
-			draggable: false
+			draggable: true
 		};
 		
 		if (!vm.markerPairList["m"+vm.markers1Count])
