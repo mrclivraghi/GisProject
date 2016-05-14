@@ -3,10 +3,10 @@
 
   angular
     .module('gisproject')
-    .directive('acmeNavbar', acmeNavbar);
+    .directive('gisNavbar', gisNavbar);
 
   /** @ngInject */
-  function acmeNavbar() {
+  function gisNavbar() {
     var directive = {
       restrict: 'E',
       templateUrl: 'app/components/navbar/navbar.html',

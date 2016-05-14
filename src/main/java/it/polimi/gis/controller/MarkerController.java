@@ -13,6 +13,7 @@ import com.codahale.metrics.annotation.Timed;
 import io.swagger.annotations.ApiOperation;
 import it.anggen.searchbean.entity.EntitySearchBean;
 import it.polimi.gis.model.Marker;
+import it.polimi.gis.model.MarkerPair;
 
 @Controller
 @RequestMapping("/marker")
@@ -23,7 +24,7 @@ public class MarkerController {
 	    @RequestMapping(method = RequestMethod.POST)
 	    public ResponseEntity search(
 	        @org.springframework.web.bind.annotation.RequestBody
-	        Marker[] markerArray) {
+	        MarkerPair[] markerArray) {
 	    	
 	    	System.out.println("Lungh"+markerArray.length);
 	    	
