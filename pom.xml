@@ -30,6 +30,18 @@
   <version>2.5.3</version>
 </dependency>
 
+<dependency>
+    <groupId>com.vividsolutions</groupId>
+    <artifactId>jts</artifactId>
+    <version>1.8</version>
+</dependency>
+
+<dependency>
+    <groupId>org.opengis</groupId>
+    <artifactId>geoapi</artifactId>
+    <version>3.0.0</version>
+  </dependency>
+
 
 <dependency>
     <groupId>org.eclipse.jgit</groupId>
