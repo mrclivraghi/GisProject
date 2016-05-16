@@ -10,21 +10,44 @@
     var vm = this;
 	
 	vm.markerPairList={};
-	
-	vm.markers1Count=0;
-	vm.markers2Count=0;
-	vm.events1= {
-            map: {
-                enable: ['drag', 'click'],
-                logic: 'emit'
-            }
-        };
 	vm.markers1={
 		
 	};
 	vm.markers2={
 		
 	};
+	
+	function searchMarker()
+	{
+		MarkerService.search().then(function successCallback(response) {
+				vm.markerPairList=response.data;
+				for (var i =0; i<vm.markerPairList.length; i++)
+				{
+					vm.markers1["m"+(i+1)]=vm.markerPairList[i].marker1;
+					vm.markers2["m"+(i+1)]=vm.markerPairList[i].marker2;
+					vm.markers1["m"+(i+1)].focus=false;
+					vm.markers1["m"+(i+1)].draggable=true;
+					vm.markers2["m"+(i+1)].focus=false;
+					vm.markers2["m"+(i+1)].draggable=true;
+					
+				}
+				vm.markers1Count=vm.markerPairList.length;
+				vm.markers2Count=vm.markerPairList.length;
+		},function errorCallback(response) { 
+			console.log("error");
+			return; 
+		});
+	}
+	searchMarker();
+	
+	
+	vm.events1= {
+            map: {
+                enable: ['drag', 'click'],
+                logic: 'emit'
+            }
+        };
+	
 	
 	
 	vm.wmsUrl;

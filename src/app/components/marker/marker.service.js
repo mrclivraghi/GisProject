@@ -13,6 +13,12 @@ var promise= $http.post("http://127.0.0.1:8080/GisProjectServer/map",markerArray
 return promise; 
 };
 
+this.search = function() {
+
+var promise= $http.get("http://127.0.0.1:8080/GisProjectServer/map");
+return promise; 
+};
+
 
 }
 })();
