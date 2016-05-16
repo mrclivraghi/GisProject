@@ -42,10 +42,22 @@
     <version>3.0.0</version>
   </dependency>
   
-  <dependency>
+  <!--  <dependency>
     <groupId>net.postgis</groupId>
     <artifactId>postgis-jdbc</artifactId>
     <version>2.2.0</version>
+</dependency> -->
+
+<dependency>
+    <groupId>org.hibernate</groupId>
+    <artifactId>hibernate-spatial</artifactId>
+    <version>4.3</version><!-- compatible with Hibernate 4.3.x -->
+    <exclusions>
+        <exclusion>
+            <artifactId>postgresql</artifactId>
+            <groupId>postgresql</groupId>
+        </exclusion>
+    </exclusions>
 </dependency>
 
 

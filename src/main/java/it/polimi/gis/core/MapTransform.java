@@ -1,6 +1,9 @@
 package it.polimi.gis.core;
 
 import com.vividsolutions.jts.geom.Point;
+
+import it.polimi.gis.model.Pair;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import org.geotools.data.DataStore;
