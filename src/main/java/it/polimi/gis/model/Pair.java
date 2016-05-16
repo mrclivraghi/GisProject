@@ -2,6 +2,7 @@ package it.polimi.gis.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -14,6 +15,7 @@ import com.vividsolutions.jts.geom.Point;
 public class Pair {
 	
 	@Id
+	@GeneratedValue
 	private Integer pairId;
 	
 	@Column(columnDefinition="Geometry",name="point_a")

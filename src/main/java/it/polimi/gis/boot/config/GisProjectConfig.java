@@ -22,6 +22,8 @@ public class GisProjectConfig {
     private String showSql;
     @Value("${hibernate.cache.region.factory_class}")
     private String cacheRegion;
+    
+    
     @Value("${datasource.driver.class.name}")
     private String driverClassName;
     @Value("${datasource.jdbc}")

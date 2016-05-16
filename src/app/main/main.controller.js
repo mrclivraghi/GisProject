@@ -131,7 +131,7 @@ $scope.$on('leafletDirectiveMap.map2.click', function(event, args){
 	
 	function sendMarker()
 	{
-		MarkerService.send(vm.markers).then(function successCallback(response) {
+		MarkerService.send(vm.markerPairList).then(function successCallback(response) {
 				console.log(response);
 },function errorCallback(response) { 
 	console.log("error");
