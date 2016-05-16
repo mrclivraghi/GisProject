@@ -1,6 +1,7 @@
 package it.polimi.gis.controller;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -61,6 +62,38 @@ public class MapController {
 	        return ResponseEntity.ok().body(null);
 	    }
 	    
+	    
+	    @RequestMapping(method = RequestMethod.GET)
+	    public ResponseEntity search() {
+	    	
+	    	List<Pair> pairList = pairRepository.findAll();
+	    	List<MarkerPair> markerPairList = new ArrayList<MarkerPair>();
+	    	Integer i=0;
+	    	for (Pair pair: pairList)
+	    	{
+	    		i++;
+	    		MarkerPair markerPair = new MarkerPair();
+	    		markerPair.setMarkerPairId(i);
+	    		Marker marker1 = new Marker();
+	    		marker1.setMessage("Marker #"+i);
+	    		marker1.setLat(pair.getPointA().getY());
+	    		marker1.setLng(pair.getPointA().getX());
+	    		
+
+	    		Marker marker2 = new Marker();
+	    		marker2.setMessage("Marker #"+i);
+	    		marker2.setLat(pair.getPointB().getY());
+	    		marker2.setLng(pair.getPointB().getX());
+	    		
+	    		markerPair.setMarker1(marker1);
+	    		markerPair.setMarker2(marker2);
+	    		
+	    		markerPairList.add(markerPair);
+	    		
+	    	}
+	    	
+	    	return ResponseEntity.ok().body(markerPairList);
+	    }
 	    
 	    @ResponseBody
 	    @RequestMapping(value = "/loadMap", method = RequestMethod.POST)
