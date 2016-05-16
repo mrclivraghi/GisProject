@@ -41,6 +41,12 @@
     <artifactId>geoapi</artifactId>
     <version>3.0.0</version>
   </dependency>
+  
+  <dependency>
+    <groupId>net.postgis</groupId>
+    <artifactId>postgis-jdbc</artifactId>
+    <version>2.2.0</version>
+</dependency>
 
 
 <dependency>
