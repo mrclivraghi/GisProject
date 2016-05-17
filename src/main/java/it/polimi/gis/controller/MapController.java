@@ -95,19 +95,6 @@ public class MapController {
 	    	return ResponseEntity.ok().body(markerPairList);
 	    }
 	    
-	    @ResponseBody
-	    @RequestMapping(value = "/loadMap", method = RequestMethod.POST)
-	    private ResponseEntity loadFileMyFile(
-	        @RequestParam(value = "file", required = false)
-	        MultipartFile file) {
-
-	    	Date now = new Date();
-	    	SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
-	    	
-	    	String destination="D:/uploadedFile/GisProject/"+sdf.format(now)+"/";
-	    	String filePath = it.anggen.utils.Utility.saveMultipartFile(file, destination);
-	    	return  ResponseEntity.ok().body(filePath);
-	    }
 	
 	
 }

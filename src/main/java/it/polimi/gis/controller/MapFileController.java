@@ -113,12 +113,18 @@ public class MapFileController {
     	Date now = new Date();
     	SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
     	
-    	String destination="D:/uploadedFile/GisProject/mapFile/"+sdf.format(now)+"/";
-    	String filePath = it.anggen.utils.Utility.saveMultipartFile(file, destination);
-    	MapFile newMapFile = new MapFile();
-    	newMapFile.setFilePath(filePath);
-    	mapFileService.insert(newMapFile);
-    	return  ResponseEntity.ok().body(filePath);
+    	if (file.getOriginalFilename().endsWith(".shp")){
+    		
+	    	String destination="D:/uploadedFile/GisProject/mapFile/"+sdf.format(now)+"/";
+	    	String filePath = it.anggen.utils.Utility.saveMultipartFile(file, destination);
+	    	MapFile newMapFile = new MapFile();
+	    	newMapFile.setFilePath(filePath);
+	    	mapFileService.insert(newMapFile);
+	    	return  ResponseEntity.ok().body(filePath);
+	    	}
+	    	else
+	    		return ResponseEntity.badRequest().build();
+    	
     }
 
 }
