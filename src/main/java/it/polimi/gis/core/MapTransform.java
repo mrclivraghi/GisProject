@@ -67,7 +67,7 @@ public interface MapTransform {
      *
      * @param pairs the homologous points of the source map and the target map
      */
-    public void setPairs(ArrayList<Point> pairs);
+    public void setPairs(ArrayList<Pair> pairs);
 
     /**
      * Return the homologous points computed using the source map
