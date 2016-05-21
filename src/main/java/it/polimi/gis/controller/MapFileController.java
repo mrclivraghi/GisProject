@@ -127,7 +127,7 @@ public class MapFileController {
 	    	MapFile newMapFile = new MapFile();
 	    	newMapFile.setFilePath(filePath);
 	    	newMapFile.setWorkSpace("gisProject");
-	    	newMapFile.setName(zipFile.getName());
+	    	newMapFile.setName(zipFile.getName().replaceAll(".zip", ""));
 	    	
 	    	mapFileService.insert(newMapFile);
 	    	

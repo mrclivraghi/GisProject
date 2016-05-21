@@ -36,7 +36,7 @@ public class GeoServerService
 			boolean exists = reader.existGeoserver();
 			if (exists)
 			{
-				String fileName=zipFile.getName();
+				String fileName=zipFile.getName().replaceAll(".zip", "");
 				try {
 					
 					Boolean published = publisher.publishShp("gisProject",fileName,fileName,zipFile,"EPSG:4326","default_point");
