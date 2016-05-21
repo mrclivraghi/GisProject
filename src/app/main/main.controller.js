@@ -18,19 +18,62 @@
 		
 	};
 	
+	function removeMarker1(e)
+	{
+	var item=Number($(".leaflet-contextmenu-item").text().replace("Remove marker #",""));
+	$(".leaflet-contextmenu-item").remove();
+	delete vm.markers1[(item+1)];
+	delete vm.markerPairList[item].marker1;
+	if (vm.markerPairList[item].marker2==null)
+		vm.markerPairList.splice(item,1);
+	vm.markers1Count--;
+	}
+	
+	function removeMarker2(e)
+	{
+		var item=Number($(".leaflet-contextmenu-item").text().replace("Remove marker #",""));
+	$(".leaflet-contextmenu-item").remove();
+	delete vm.markers2[(item+1)];
+	delete vm.markerPairList[item].marker2;
+	if (vm.markerPairList[item].marker1==null)
+		vm.markerPairList.splice(item,1);
+	vm.markers2Count--;
+	
+	}
+	
 	function searchMarker()
 	{
 		MarkerService.search().then(function successCallback(response) {
 				vm.markerPairList=response.data;
 				for (var i =0; i<vm.markerPairList.length; i++)
 				{
-					vm.markers1["m"+(i+1)]=vm.markerPairList[i].marker1;
-					vm.markers2["m"+(i+1)]=vm.markerPairList[i].marker2;
-					vm.markers1["m"+(i+1)].focus=false;
-					vm.markers1["m"+(i+1)].draggable=true;
-					vm.markers2["m"+(i+1)].focus=false;
-					vm.markers2["m"+(i+1)].draggable=true;
-					
+				console.log(vm.markerPairList[i].marker1);
+				var test=vm.markerPairList[i].marker1.message;
+					vm.markers1[(i+1)]=vm.markerPairList[i].marker1;
+					vm.markers2[(i+1)]=vm.markerPairList[i].marker2;
+					vm.markers1[(i+1)].focus=false;
+					vm.markers1[(i+1)].draggable=true;
+					vm.markers2[(i+1)].focus=false;
+					vm.markers2[(i+1)].draggable=true;
+					 vm.markers1[(i+1)].contextmenu=true;
+					 vm.markers1[(i+1)].contextmenuWidth=140;
+					 
+					vm.markers1[(i+1)].contextmenuItems=[{
+          text: 'Remove marker #'+i,
+		  icon: 'http://files.softicons.com/download/toolbar-icons/16x16-free-application-icons-by-aha-soft/ico/Application.ico',
+		  iconCls: 'Test',
+		  hideOnSelect: false,
+          callback: function(test) { vm.removeMarker1(test)}
+        }];
+					 vm.markers2[(i+1)].contextmenu=true;
+					 vm.markers2[(i+1)].contextmenuWidth=140;
+					vm.markers2[(i+1)].contextmenuItems=[{
+           text: 'Remove marker #'+i,
+		  icon: 'http://files.softicons.com/download/toolbar-icons/16x16-free-application-icons-by-aha-soft/ico/Application.ico',
+		  iconCls: 'Test',
+		  hideOnSelect: false,
+          callback: function() { vm.removeMarker2((i+1))}
+        }];
 				}
 				vm.markers1Count=vm.markerPairList.length;
 				vm.markers2Count=vm.markerPairList.length;
@@ -50,7 +93,7 @@
 	console.log(vm.defaults1);
 	vm.events1= {
             map: {
-                enable: ['drag', 'click'],
+                enable: ['drag', 'click','contextmenu.select'],
                 logic: 'emit'
             }
         };
@@ -97,6 +140,10 @@ $scope.$on('leafletDirectiveMap.map1.click', function(event, args){
 $scope.$on('leafletDirectiveMap.map2.click', function(event, args){
 	vm.addMarker2(args.leafletEvent.latlng.lat,args.leafletEvent.latlng.lng);
 });
+
+$scope.$on('leafletDirectiveMap.map1.contextmenu.select', function(event, args){
+	console.log(event);
+});
    
 	
 	
@@ -112,16 +159,16 @@ $scope.$on('leafletDirectiveMap.map2.click', function(event, args){
 			draggable: true
 		};
 		
-		if (!vm.markerPairList["m"+vm.markers1Count])
+		if (!vm.markerPairList[vm.markers1Count-1])
 		{
-			vm.markerPairList["m"+vm.markers1Count]={};
-			vm.markerPairList["m"+vm.markers1Count].markerPairId=vm.markers1Count;
+			vm.markerPairList.push({});
+			vm.markerPairList[vm.markers1Count-1].markerPairId=vm.markers1Count;
 		}
 		
-		vm.markerPairList["m"+vm.markers1Count].marker1=newMarker;
+		vm.markerPairList[vm.markers1Count-1].marker1=newMarker;
 		
-		
-		vm.markers1["m"+vm.markers1Count]=newMarker;
+		console.log(vm.markerPairList);
+		vm.markers1[vm.markers1Count]=newMarker;
 	}
 	
 	function addMarker2(latitude,longitude)
@@ -133,26 +180,27 @@ $scope.$on('leafletDirectiveMap.map2.click', function(event, args){
 			lng:longitude,
 			focus: true,
 			message: 'Marker #'+vm.markers2Count,
-			draggable: false
+			draggable: true
 		};
 		
 		
-		if (!vm.markerPairList["m"+vm.markers2Count])
+		if (!vm.markerPairList[vm.markers2Count-1])
 		{
-			vm.markerPairList["m"+vm.markers2Count]={};
-			vm.markerPairList["m"+vm.markers2Count].markerPairId=vm.markers2Count;
+			vm.markerPairList.push({});
+			vm.markerPairList[vm.markers2Count-1].markerPairId=vm.markers2Count;
 		}
 		
-		vm.markerPairList["m"+vm.markers2Count].marker2=newMarker;
+		vm.markerPairList[vm.markers2Count-1].marker2=newMarker;
 		
-		vm.markers2["m"+vm.markers2Count]=newMarker;
+		vm.markers2[vm.markers2Count]=newMarker;
 	}
 	
 	function highLightMarker(index)
 	{
-		vm.markers1["m"+index].focus=true;
-		vm.markers2["m"+index].focus=true;
+		vm.markers1[index].focus=true;
+		vm.markers2[index].focus=true;
 		$log.debug(vm.markers1);
+		$log.debug(index);
 	}
 	
 	function sendMarker()
@@ -243,6 +291,8 @@ $scope.$on('leafletDirectiveMap.map2.click', function(event, args){
 	vm.addLayer=addLayer;
 	vm.center=center;
 	vm.searchMapFile=searchMapFile;
+	vm.removeMarker1=removeMarker1;
+	vm.removeMarker2=removeMarker2;
 	
     }
 })();
