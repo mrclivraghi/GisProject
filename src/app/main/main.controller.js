@@ -41,7 +41,13 @@
 	}
 	searchMarker();
 	
-	
+	vm.defaults1={
+	//crs: 'EPSG3857',
+	minZoom: 16
+		//srs: 'EPSG:404000'
+		
+	};
+	console.log(vm.defaults1);
 	vm.events1= {
             map: {
                 enable: ['drag', 'click'],
@@ -55,8 +61,7 @@
 	vm.layerName;
 	vm.layer;
 	
-	
-	vm.center1={ lat:45, lng:9, zoom: 2};
+	vm.center1={ lat:45.494384, lng:9.142647, zoom: 15};
 	vm.center2={ lat:0, lng:0, zoom: 2};
 	vm.centerLat;
 	vm.centerLng;
@@ -70,7 +75,7 @@
                         }
                     },
        overlays: {
-                        wms: {
+                      /*  wms: {
                             name: 'Ecuador adm',
                             type: 'wms',
                             visible: true,
@@ -80,19 +85,19 @@
                                 format: 'image/png',
                                 transparent: true
                             }
-							},
+							},*/
 							
-							wms2: {
-                            name: 'DBT 00',
+						/*	wms2: {
+                            name: 'DBT_00',
                             type: 'wms',
                             visible: true,
                             url: 'http://localhost:8081/geoserver/gisProject/wms',
                             layerParams: {
-                                layers: 'gisProject:DBT_00',
+                                layers: 'gisProject:DBT_00_4326',
                                 format: 'image/png',
                                 transparent: true
                             }
-							}
+							}*/
                         }
 	};
 	
@@ -105,10 +110,6 @@ $scope.$on('leafletDirectiveMap.map2.click', function(event, args){
 });
    
 	
-	
-    $scope.defaults= {
-            scrollWheelZoom: false
-        }
 	
 	function addMarker1(latitude,longitude)
 	{
