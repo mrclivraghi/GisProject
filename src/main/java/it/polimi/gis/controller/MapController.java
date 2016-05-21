@@ -63,6 +63,16 @@ public class MapController {
 	    }
 	    
 	    
+	    @ResponseBody
+	    @RequestMapping(method = RequestMethod.DELETE)
+	    public ResponseEntity delete() {
+	    	
+	    	pairRepository.deleteAll();
+	        return ResponseEntity.ok().body(null);
+	    }
+	    
+	    
+	    
 	    @RequestMapping(method = RequestMethod.GET)
 	    public ResponseEntity search() {
 	    	

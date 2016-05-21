@@ -214,6 +214,21 @@ $scope.$on('leafletDirectiveMap.map1.contextmenu.select', function(event, args){
 	
 	}
 	
+	
+	function removeMarker()
+	{
+		MarkerService.remove().then(function successCallback(response) {
+				vm.markerPairList={};
+				vm.markers1={};
+				vm.markers2={};
+},function errorCallback(response) { 
+	console.log("error");
+	return; 
+});
+	
+	}
+	
+	
 	function addLayer(mapIndex)
 	{
 		var newLayer;
@@ -293,6 +308,7 @@ $scope.$on('leafletDirectiveMap.map1.contextmenu.select', function(event, args){
 	vm.searchMapFile=searchMapFile;
 	vm.removeMarker1=removeMarker1;
 	vm.removeMarker2=removeMarker2;
+	vm.removeMarker=removeMarker;
 	
     }
 })();

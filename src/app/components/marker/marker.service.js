@@ -7,11 +7,18 @@ angular
 function MarkerService($http)
 {
 
+
 this.send = function(markerObject) {
 var markerArray = Object.keys(markerObject).map(function (key) {return markerObject[key]});
 var promise= $http.post("http://127.0.0.1:8080/GisProjectServer/map",markerArray);
 return promise; 
 };
+
+this.remove = function() {
+var promise= $http["delete"]("http://127.0.0.1:8080/GisProjectServer/map");
+return promise; 
+};
+
 
 this.search = function() {
 
