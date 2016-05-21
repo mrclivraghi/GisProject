@@ -7,7 +7,7 @@
     .controller('MainController', MainController);
 
   /** @ngInject */
-  function MainController($scope,MarkerService,$log) {
+  function MainController($scope,MarkerService,$log,mainService) {
     var vm = this;
 	
 	vm.markerPairList={};
@@ -62,11 +62,11 @@
 	vm.layer;
 	
 	vm.center1={ lat:45.494384, lng:9.142647, zoom: 15};
-	vm.center2={ lat:0, lng:0, zoom: 2};
+	vm.center2={ lat:45.494384, lng:9.142647, zoom: 15};
 	vm.centerLat;
 	vm.centerLng;
 	
-	vm.layers={
+	vm.layers1={
 		baselayers: {
                         xyz: {
                             name: 'OpenStreetMap (XYZ)',
@@ -75,33 +75,22 @@
                         }
                     },
        overlays: {
-                      /*  wms: {
-                            name: 'Ecuador adm',
-                            type: 'wms',
-                            visible: true,
-                            url: 'http://ows3.como.polimi.it:8080/geoserver/user18_16/wms',
-                            layerParams: {
-                                layers: 'user18_16:BOL_adm1',
-                                format: 'image/png',
-                                transparent: true
-                            }
-							},*/
-							
-						/*	wms2: {
-                            name: 'DBT_00',
-                            type: 'wms',
-                            visible: true,
-                            url: 'http://localhost:8081/geoserver/gisProject/wms',
-                            layerParams: {
-                                layers: 'gisProject:DBT_00_4326',
-                                format: 'image/png',
-                                transparent: true
-                            }
-							}*/
+                     
                         }
 	};
 	
-		
+		vm.layers2={
+		baselayers: {
+                        xyz: {
+                            name: 'OpenStreetMap (XYZ)',
+                            url: 'http://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                            type: 'xyz'
+                        }
+                    },
+       overlays: {
+                     
+                        }
+	};	
 $scope.$on('leafletDirectiveMap.map1.click', function(event, args){
 	vm.addMarker1(args.leafletEvent.latlng.lat,args.leafletEvent.latlng.lng);
 });
@@ -177,9 +166,14 @@ $scope.$on('leafletDirectiveMap.map2.click', function(event, args){
 	
 	}
 	
-	function addLayer()
+	function addLayer(mapIndex)
 	{
-		var newLayer= {
+		var newLayer;
+		
+		if (vm.selectedMapFile==null || vm.selectedMapFile==null)
+		{
+			
+			newLayer= {
 							name: vm.layerName,
                             type: 'wms',
                             visible: true,
@@ -189,9 +183,31 @@ $scope.$on('leafletDirectiveMap.map2.click', function(event, args){
                                 format: 'image/png',
                                 transparent: true
                             }
+			
+			};
 		
-		};
-		vm.layers.overlays[vm.layerName]=newLayer;
+		} else
+		{
+				newLayer= {
+							name: vm.selectedMapFile.name,
+                            type: 'wms',
+                            visible: true,
+                            url: 'http://localhost:8081/geoserver/gisProject/wms',
+                            layerParams: {
+                                layers: vm.selectedMapFile.work_space+':'+vm.selectedMapFile.name,
+                                format: 'image/png',
+                                transparent: true
+                            }
+			
+			};
+			
+		}
+		
+		
+		if (mapIndex==1)
+			vm.layers1.overlays[vm.layerName]=newLayer;
+		else
+			vm.layers2.overlays[vm.layerName]=newLayer;
 	
 	}
 	
@@ -203,8 +219,22 @@ $scope.$on('leafletDirectiveMap.map2.click', function(event, args){
 	
 	}
 	
+	vm.mapFileList;
+	vm.selectedMapFile;
 	
+	function searchMapFile()
+	{
+		mainService.findAll().then(function successCallback(response) {
+			vm.mapFileList=response.data;
+			
+		},function errorCallback(response) { 
+			$log.error("Si è verificato un errore");
+			$log.debug(response);
+			return; 
+		});
+	}
 	
+	searchMapFile();
 	
 	vm.addMarker1=addMarker1;
 	vm.addMarker2=addMarker2;
@@ -212,6 +242,7 @@ $scope.$on('leafletDirectiveMap.map2.click', function(event, args){
 	vm.sendMarker=sendMarker;
 	vm.addLayer=addLayer;
 	vm.center=center;
+	vm.searchMapFile=searchMapFile;
 	
     }
 })();

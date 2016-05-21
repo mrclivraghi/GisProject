@@ -15,6 +15,11 @@ function MainService($http)
 			});
 			return promise; 
 		}
+		
+		this.findAll= function(){
+			var promise= $http.post("http://127.0.0.1:8080/GisProjectServer/mapFile/search",{});
+			return promise; 
+		}
 
 }
 })();
