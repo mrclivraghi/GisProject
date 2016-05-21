@@ -1,3 +1,4 @@
+
 (function() {
   'use strict';
 
@@ -76,6 +77,18 @@
                             url: 'http://ows3.como.polimi.it:8080/geoserver/user18_16/wms',
                             layerParams: {
                                 layers: 'user18_16:BOL_adm1',
+                                format: 'image/png',
+                                transparent: true
+                            }
+							},
+							
+							wms2: {
+                            name: 'DBT 00',
+                            type: 'wms',
+                            visible: true,
+                            url: 'http://localhost:8081/geoserver/gisProject/wms',
+                            layerParams: {
+                                layers: 'gisProject:DBT_00',
                                 format: 'image/png',
                                 transparent: true
                             }

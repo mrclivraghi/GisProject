@@ -26,8 +26,7 @@ public class GeoServerService
     @Value("${application.geoserver.password}")
     private String password;
     
-    
-    public void connect()
+    public void connect(File zipFile)
     {
     	
     	 try {
@@ -37,11 +36,10 @@ public class GeoServerService
 			boolean exists = reader.existGeoserver();
 			if (exists)
 			{
-				File zipFile = new File("D:\\uploadedFile\\GisProject\\mapFile\\DBT_00.zip");
-				
+				String fileName=zipFile.getName();
 				try {
 					
-					Boolean published = publisher.publishShp("gisProject","DBT_00","DBT_00",zipFile,"EPSG:4326","default_point");
+					Boolean published = publisher.publishShp("gisProject",fileName,fileName,zipFile,"EPSG:4326","default_point");
 					
 					
 				} catch (FileNotFoundException | IllegalArgumentException e) {
@@ -57,5 +55,7 @@ public class GeoServerService
 		}
 
     }
+    
+    
 
 }

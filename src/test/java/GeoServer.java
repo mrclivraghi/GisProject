@@ -7,6 +7,8 @@ import it.anggen.repository.entity.ProjectRepository;
 import it.anggen.repository.field.EnumFieldRepository;
 import it.polimi.gis.service.GeoServerService;
 
+import java.io.File;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +31,9 @@ public class GeoServer {
 	@Test
 	public void createJs()
 	{
-		geoServerService.connect();
+		File zipFile = new File("D:\\uploadedFile\\GisProject\\mapFile\\DBT_00.zip");
+		
+		geoServerService.connect(zipFile);
 	}
 
 }

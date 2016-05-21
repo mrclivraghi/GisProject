@@ -1,6 +1,7 @@
 
 package it.polimi.gis.controller;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -9,10 +10,12 @@ import io.swagger.annotations.ApiOperation;
 import it.anggen.security.SecurityService;
 import it.anggen.service.log.LogEntryService;
 import it.polimi.gis.model.MapFile;
+import it.polimi.gis.service.GeoServerService;
 import it.polimi.gis.service.MapFileService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,6 +32,9 @@ public class MapFileController {
 
     @org.springframework.beans.factory.annotation.Autowired
     private MapFileService mapFileService;
+    
+    @Autowired
+    private GeoServerService geoServerService;
     
     private final static Logger log = LoggerFactory.getLogger(MapFile.class);
 
@@ -113,13 +119,20 @@ public class MapFileController {
     	Date now = new Date();
     	SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
     	
-    	if (file.getOriginalFilename().endsWith(".shp")){
+    	if (file.getOriginalFilename().endsWith(".zip")){
     		
 	    	String destination="D:/uploadedFile/GisProject/mapFile/"+sdf.format(now)+"/";
 	    	String filePath = it.anggen.utils.Utility.saveMultipartFile(file, destination);
+	    	File zipFile= new File(filePath);
 	    	MapFile newMapFile = new MapFile();
 	    	newMapFile.setFilePath(filePath);
+	    	newMapFile.setWorkSpace("gisProject");
+	    	newMapFile.setName(zipFile.getName());
+	    	
 	    	mapFileService.insert(newMapFile);
+	    	
+	    	geoServerService.connect(zipFile);
+	    	
 	    	return  ResponseEntity.ok().body(filePath);
 	    	}
 	    	else
