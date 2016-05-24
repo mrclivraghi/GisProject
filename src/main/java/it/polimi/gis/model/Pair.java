@@ -25,6 +25,8 @@ public class Pair {
 	@Column(columnDefinition="Geometry",name="point_b")
 	@Type(type="org.hibernate.spatial.GeometryType")
     private Point pointB;
+	
+	private String project;
 
     public Point getPointA() {
         return pointA;
@@ -48,6 +50,14 @@ public class Pair {
 
 	public void setPairId(Integer pairId) {
 		this.pairId = pairId;
+	}
+
+	public String getProject() {
+		return project;
+	}
+
+	public void setProject(String project) {
+		this.project = project;
 	}
     
 }

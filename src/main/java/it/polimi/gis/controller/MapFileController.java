@@ -131,7 +131,7 @@ public class MapFileController {
 	    	
 	    	mapFileService.insert(newMapFile);
 	    	
-	    	geoServerService.connect(zipFile);
+	    	geoServerService.loadZipFile(zipFile);
 	    	
 	    	return  ResponseEntity.ok().body(filePath);
 	    	}

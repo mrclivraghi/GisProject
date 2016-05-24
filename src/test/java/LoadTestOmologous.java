@@ -18,22 +18,20 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes=GisProjectApplication.class)
-public class GeoServer {
+public class LoadTestOmologous {
 
 	@Autowired
 	GeoServerService geoServerService;
 	
 	
-	public GeoServer() {
+	public LoadTestOmologous() {
 		// TODO Auto-generated constructor stub
 	}
 	
 	@Test
 	public void createJs()
 	{
-		File zipFile = new File("D:\\uploadedFile\\GisProject\\mapFile\\DBT_00.zip");
-		
-		geoServerService.loadZipFile(zipFile);
+		geoServerService.getFeature("");
 	}
 
 }

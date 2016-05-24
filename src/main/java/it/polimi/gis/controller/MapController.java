@@ -43,6 +43,9 @@ public class MapController {
 	        @org.springframework.web.bind.annotation.RequestBody
 	        MarkerPair[] markerArray) {
 	    	
+	    	pairRepository.deleteAll();
+	    	Date now = new Date();
+	    	SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
 	    	if (markerArray!=null && markerArray.length>0)
 	    	{
 	    		for (int i=0; i<markerArray.length; i++)
@@ -54,7 +57,7 @@ public class MapController {
 	    			
 	    			coord = new Coordinate(markerArray[i].getMarker2().getLng(), markerArray[i].getMarker2().getLat());
 	    			pair.setPointB(gf.createPoint(coord));
-	    			
+	    			pair.setProject("markers_"+sdf.format(now));
 	    			pairRepository.save(pair);
 	    		}
 	    	}
