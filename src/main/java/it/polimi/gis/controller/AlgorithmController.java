@@ -64,7 +64,34 @@ public class AlgorithmController {
 	    	mapTransform.setTargetPoints(targetPoints);
 	    	
 	    	ArrayList<Pair> homologousList=mapTransform.findHomologousPoints();
-	        return ResponseEntity.ok().body(homologousList);
+	    	//truncate to first 100
+	    	
+	    	List<MarkerPair> markerPairList = new ArrayList<MarkerPair>();
+	    	Integer i=0;
+	    	for (Pair pair: homologousList)
+	    	{
+	    		i++;
+	    		MarkerPair markerPair = new MarkerPair();
+	    		markerPair.setMarkerPairId(i);
+	    		Marker marker1 = new Marker();
+	    		marker1.setMessage("Marker #"+i);
+	    		marker1.setLat(pair.getPointA().getInteriorPoint().getY());
+	    		marker1.setLng(pair.getPointA().getInteriorPoint().getX());
+	    		
+
+	    		Marker marker2 = new Marker();
+	    		marker2.setMessage("Marker #"+i);
+	    		marker2.setLat(pair.getPointB().getInteriorPoint().getY());
+	    		marker2.setLng(pair.getPointB().getInteriorPoint().getX());
+	    		
+	    		markerPair.setMarker1(marker1);
+	    		markerPair.setMarker2(marker2);
+	    		
+	    		markerPairList.add(markerPair);
+	    		
+	    	}
+	    	
+	        return ResponseEntity.ok().body(markerPairList.subList(0, markerPairList.size()>100? 100: markerPairList.size()));
 	    }
 	    
 	    

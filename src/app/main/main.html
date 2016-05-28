@@ -12,7 +12,7 @@
 		<div class="col-md-2">
 			<uib-accordion>
 			
-				<uib-accordion-group heading="Marker{{markerPair.markerPairId}}" ng-repeat="markerPair in vm.markerPairList" ng-click="vm.highLightMarker($index+1)">
+				<uib-accordion-group heading="Marker{{markerPair.markerPairId}}" ng-repeat="markerPair in vm.markerPairList | limitTo: 10" ng-click="vm.highLightMarker($index+1)">
 					marker1: {{markerPair.marker1.lat | number: 2}}, {{markerPair.marker1.lng | number:2}} <br>
 					marker1: {{markerPair.marker2.lat | number: 2}}, {{markerPair.marker2.lng | number:2}}
 				</uib-accordion-group>
