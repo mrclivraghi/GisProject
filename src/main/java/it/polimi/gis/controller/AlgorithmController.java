@@ -1,12 +1,24 @@
 package it.polimi.gis.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
+import org.geotools.data.DataStore;
+import org.geotools.data.DataStoreFinder;
+import org.geotools.data.FileDataStore;
+import org.geotools.data.FileDataStoreFinder;
+import org.geotools.data.shapefile.ShapefileDataStore;
+import org.geotools.data.shapefile.ShapefileDataStoreFactory;
+import org.geotools.data.simple.SimpleFeatureSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -62,6 +74,12 @@ public class AlgorithmController {
 	    	}
 	    	mapTransform.setSourcePoints(sourcePoints);
 	    	mapTransform.setTargetPoints(targetPoints);
+	    	mapTransform.setPairs((ArrayList<Pair>) pairList);
+	    	
+	    	DataStore sourceDataStore=loadDataStore("DBT_00_4326.shp");
+	    	DataStore targetDataStore=loadDataStore("OSM_00_4326.shp");
+	    	mapTransform.setDataStoreSource(sourceDataStore);
+	    	mapTransform.setDataStoreTarget(targetDataStore);
 	    	
 	    	ArrayList<Pair> homologousList=mapTransform.findHomologousPoints();
 	    	//truncate to first 100
@@ -118,6 +136,23 @@ public class AlgorithmController {
 	    	parameterMap.put("numIterations", algorithmBean.getParameters().getNumIterations());
 	    	
 	    	return parameterMap;
+	    }
+	    
+	    private DataStore loadDataStore(String name){
+	    	
+	    	File fileTest = new File("");
+	    	File file= new File(fileTest.getAbsolutePath()+"/SW_Ricerca_Punti_Omologhi/Mappe/"+name);
+	    	
+	    	DataStore dataStore=null;
+	    	ShapefileDataStoreFactory f = new ShapefileDataStoreFactory();
+	    	try {
+	    		dataStore = f.createDataStore( file.toURL());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	    	
+	    	return dataStore;
 	    }
 	    
 	    

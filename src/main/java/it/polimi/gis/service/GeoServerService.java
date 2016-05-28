@@ -82,6 +82,8 @@ public class GeoServerService
 						test2.
 						
 					}*/
+					
+					RESTDataStore ds=reader.getDatastore("", "");
 			}
 			
 			System.out.println("Exists");

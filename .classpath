@@ -33,7 +33,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="gt-api-15-RC1.jar"/>
 	<classpathentry kind="lib" path="geoserver-manager-1.7-20140430.132734-1.jar"/>
 	<classpathentry kind="lib" path="org.apache.commons.httpclient.jar"/>
 	<classpathentry kind="lib" path="jdom-1.1.jar"/>
