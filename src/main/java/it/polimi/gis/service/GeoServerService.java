@@ -46,7 +46,6 @@ public class GeoServerService
 					
 					Boolean published = publisher.publishShp("gisProject",fileName,fileName,zipFile,"EPSG:4326","default_point");
 					
-					
 				} catch (FileNotFoundException | IllegalArgumentException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

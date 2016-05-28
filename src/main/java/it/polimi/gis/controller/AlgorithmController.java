@@ -1,6 +1,9 @@
 package it.polimi.gis.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
@@ -10,14 +13,18 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import org.apache.log4j.Logger;
 import org.geotools.data.DataStore;
 import org.geotools.data.DataStoreFinder;
 import org.geotools.data.FileDataStore;
 import org.geotools.data.FileDataStoreFinder;
+import org.geotools.data.ServiceInfo;
 import org.geotools.data.shapefile.ShapefileDataStore;
 import org.geotools.data.shapefile.ShapefileDataStoreFactory;
+import org.geotools.data.shapefile.shp.ShapefileReader;
 import org.geotools.data.simple.SimpleFeatureSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -40,11 +47,15 @@ import com.vividsolutions.jts.geom.Point;
 import io.swagger.annotations.ApiOperation;
 import it.anggen.searchbean.entity.EntitySearchBean;
 import it.polimi.gis.core.MapTransform;
+import it.polimi.gis.model.MapFile;
 import it.polimi.gis.model.Marker;
 import it.polimi.gis.model.MarkerPair;
 import it.polimi.gis.model.Pair;
 import it.polimi.gis.model.bean.AlgorithmBean;
 import it.polimi.gis.repository.PairRepository;
+import it.polimi.gis.service.GeoServerService;
+import it.polimi.gis.service.MapFileService;
+import it.polimi.gis.util.Utility;
 
 @Controller
 @RequestMapping("/algorithm")
@@ -56,6 +67,12 @@ public class AlgorithmController {
 	
 	@Autowired
 	MapTransform mapTransform;
+	
+	@Autowired
+	MapFileService mapFileService;
+	
+	@Autowired
+	GeoServerService geoServerService;
 	
 	    @ResponseBody
 	    @RequestMapping(method = RequestMethod.POST)
@@ -110,6 +127,88 @@ public class AlgorithmController {
 	    	}
 	    	
 	        return ResponseEntity.ok().body(markerPairList.subList(0, markerPairList.size()>100? 100: markerPairList.size()));
+	    }
+	    
+	    
+	    @ResponseBody
+	    @RequestMapping(method = RequestMethod.POST,value="/result")
+	    public ResponseEntity getResult(
+	    		 @org.springframework.web.bind.annotation.RequestBody
+	 	        MarkerPair[] markerArray) {
+	    	
+	    	pairRepository.deleteCustomMarkers();
+	    	Date now = new Date();
+	    	SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
+	    	ArrayList<Pair> pairList = new ArrayList<Pair>();
+	    	if (markerArray!=null && markerArray.length>0)
+	    	{
+	    		for (int i=0; i<markerArray.length; i++)
+	    		{
+	    			Pair pair = new Pair();
+	    			GeometryFactory gf = new GeometryFactory();
+	    			Coordinate coord = new Coordinate(markerArray[i].getMarker1().getLng(), markerArray[i].getMarker1().getLat());
+	    			Point[] pointArr= new Point[1];
+	    			pointArr[0]=gf.createPoint(coord);
+	    			pair.setPointA(gf.createMultiPoint(pointArr));
+	    			
+	    			coord = new Coordinate(markerArray[i].getMarker2().getLng(), markerArray[i].getMarker2().getLat());
+	    			pointArr[0]=gf.createPoint(coord);
+	    			pair.setPointB(gf.createMultiPoint(pointArr));
+	    			pair.setProject("project_1");
+	    			pairList.add(pair);
+	    		}
+	    	}
+	    	
+	    	//obtain result
+	    	DataStore result = mapTransform.transform(pairList);
+	    	File shapeFile = Utility.getShapeFileFromDataStore(result);
+	    	String zipFilePath="";
+	    	if (shapeFile!=null)
+	    	{
+	    		byte[] buffer = new byte[1024];
+	    		ZipOutputStream zos;
+				try {
+					zipFilePath=shapeFile.getAbsolutePath().replace(".shp", ".zip");
+					File zip= new File(zipFilePath);
+					zip.createNewFile();
+					zos = new ZipOutputStream(new FileOutputStream(zipFilePath));
+					ZipEntry ze= new ZipEntry(shapeFile.getName());
+		    		zos.putNextEntry(ze);
+		    		
+		    		FileInputStream in = new FileInputStream(shapeFile);
+		   	   
+		    		int len;
+		    		while ((len = in.read(buffer)) > 0) {
+		    			zos.write(buffer, 0, len);
+		    		}
+		    		in.close();
+		    		zos.closeEntry();
+		    		zos.close();
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	    		
+	           
+	    		//remember close it
+	    		
+	    		
+	    	    	MapFile newMapFile = new MapFile();
+	    	    	newMapFile.setFilePath(shapeFile.getAbsolutePath());
+	    	    	newMapFile.setWorkSpace("gisProject");
+	    	    	newMapFile.setName(shapeFile.getName().replaceAll(".zip", ""));
+	    	    	
+	    	    	mapFileService.insert(newMapFile);
+	    	    	
+	    	    	geoServerService.loadZipFile(new File(zipFilePath));
+	    	    	
+	    	}
+	    	
+	    	return ResponseEntity.ok().body(null);
+	    	
 	    }
 	    
 	    

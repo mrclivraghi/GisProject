@@ -1,10 +1,19 @@
 package it.polimi.gis.core;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import org.geotools.data.DataStore;
+import org.geotools.data.FeatureSource;
+import org.geotools.data.shapefile.ShapefileDataStoreFactory;
+import org.geotools.feature.FeatureCollection;
+import org.geotools.feature.FeatureIterator;
+import org.opengis.feature.simple.SimpleFeature;
+import org.opengis.feature.simple.SimpleFeatureType;
+import org.opengis.filter.Filter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -77,8 +86,19 @@ public class MapTransformImpl implements MapTransform {
 
 	@Override
 	public DataStore transform(ArrayList<Pair> pairs) {
-		// TODO Auto-generated method stub
-		return null;
+		File fileTest = new File("");
+    	File file= new File(fileTest.getAbsolutePath()+"/SW_Ricerca_Punti_Omologhi/FakeResult/resultMap.shp");
+    	
+    	DataStore dataStore=null;
+    	ShapefileDataStoreFactory f = new ShapefileDataStoreFactory();
+    	try {
+    		dataStore = f.createDataStore( file.toURL());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	return dataStore;
 	}
 
 }

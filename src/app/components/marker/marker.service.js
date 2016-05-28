@@ -50,7 +50,12 @@ return promise;
 
 }
 
+this.getResult= function(markerList){
+var markerArray = Object.keys(markerList).map(function (key) {return markerList[key]});
+var promise= $http.post("http://127.0.0.1:8080/GisProjectServer/algorithm/result",markerArray);
+return promise; 
 
+}
 
 }
 })();
