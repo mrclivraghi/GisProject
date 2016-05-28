@@ -24,6 +24,7 @@ import com.vividsolutions.jts.geom.Point;
 
 import io.swagger.annotations.ApiOperation;
 import it.anggen.searchbean.entity.EntitySearchBean;
+import it.polimi.gis.core.MapTransform;
 import it.polimi.gis.model.Marker;
 import it.polimi.gis.model.MarkerPair;
 import it.polimi.gis.model.Pair;
@@ -37,13 +38,16 @@ public class MapController {
 	@Autowired
 	PairRepository pairRepository;
 	
+	@Autowired
+	MapTransform mapTransform;
+	
 	    @ResponseBody
 	    @RequestMapping(method = RequestMethod.POST)
 	    public ResponseEntity search(
 	        @org.springframework.web.bind.annotation.RequestBody
 	        MarkerPair[] markerArray) {
 	    	
-	    	pairRepository.deleteAll();
+	    	pairRepository.deleteCustomMarkers();
 	    	Date now = new Date();
 	    	SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
 	    	if (markerArray!=null && markerArray.length>0)
@@ -53,11 +57,14 @@ public class MapController {
 	    			Pair pair = new Pair();
 	    			GeometryFactory gf = new GeometryFactory();
 	    			Coordinate coord = new Coordinate(markerArray[i].getMarker1().getLng(), markerArray[i].getMarker1().getLat());
-	    			pair.setPointA(gf.createPoint(coord));
+	    			Point[] pointArr= new Point[1];
+	    			pointArr[0]=gf.createPoint(coord);
+	    			pair.setPointA(gf.createMultiPoint(pointArr));
 	    			
 	    			coord = new Coordinate(markerArray[i].getMarker2().getLng(), markerArray[i].getMarker2().getLat());
-	    			pair.setPointB(gf.createPoint(coord));
-	    			pair.setProject("markers_"+sdf.format(now));
+	    			pointArr[0]=gf.createPoint(coord);
+	    			pair.setPointB(gf.createMultiPoint(pointArr));
+	    			pair.setProject("project_1");
 	    			pairRepository.save(pair);
 	    		}
 	    	}
@@ -70,7 +77,7 @@ public class MapController {
 	    @RequestMapping(method = RequestMethod.DELETE)
 	    public ResponseEntity delete() {
 	    	
-	    	pairRepository.deleteAll();
+	    	pairRepository.deleteCustomMarkers();
 	        return ResponseEntity.ok().body(null);
 	    }
 	    
@@ -79,7 +86,7 @@ public class MapController {
 	    @RequestMapping(method = RequestMethod.GET)
 	    public ResponseEntity search() {
 	    	
-	    	List<Pair> pairList = pairRepository.findAll();
+	    	List<Pair> pairList = pairRepository.findCustom();
 	    	List<MarkerPair> markerPairList = new ArrayList<MarkerPair>();
 	    	Integer i=0;
 	    	for (Pair pair: pairList)
@@ -89,14 +96,14 @@ public class MapController {
 	    		markerPair.setMarkerPairId(i);
 	    		Marker marker1 = new Marker();
 	    		marker1.setMessage("Marker #"+i);
-	    		marker1.setLat(pair.getPointA().getY());
-	    		marker1.setLng(pair.getPointA().getX());
+	    		marker1.setLat(pair.getPointA().getInteriorPoint().getY());
+	    		marker1.setLng(pair.getPointA().getInteriorPoint().getX());
 	    		
 
 	    		Marker marker2 = new Marker();
 	    		marker2.setMessage("Marker #"+i);
-	    		marker2.setLat(pair.getPointB().getY());
-	    		marker2.setLng(pair.getPointB().getX());
+	    		marker2.setLat(pair.getPointB().getInteriorPoint().getY());
+	    		marker2.setLng(pair.getPointB().getInteriorPoint().getX());
 	    		
 	    		markerPair.setMarker1(marker1);
 	    		markerPair.setMarker2(marker2);

@@ -18,6 +18,7 @@
 	
 	vm.associationList={};
 	
+	
 	function associate()
 	{
 		if (vm.associationName==null || vm.associationName==undefined)
@@ -39,9 +40,17 @@
 	
 	}
 	
+	function test()
+	{
+	
+		console.log($rootScope.parameters);
+	}
+	
+	
+	
 	
 	vm.associate=associate;
-	
+	vm.test=test;
 	
     }
 })();

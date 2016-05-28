@@ -8,6 +8,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
 
+import com.vividsolutions.jts.geom.MultiPoint;
 import com.vividsolutions.jts.geom.Point;
 
 @Entity
@@ -20,27 +21,27 @@ public class Pair {
 	
 	@Column(columnDefinition="Geometry",name="point_a")
 	@Type(type="org.hibernate.spatial.GeometryType")
-    private Point pointA;
+    private MultiPoint pointA;
 	 
 	@Column(columnDefinition="Geometry",name="point_b")
 	@Type(type="org.hibernate.spatial.GeometryType")
-    private Point pointB;
+    private MultiPoint pointB;
 	
 	private String project;
 
-    public Point getPointA() {
+    public MultiPoint getPointA() {
         return pointA;
     }
 
-    public void setPointA(Point pointA) {
+    public void setPointA(MultiPoint pointA) {
         this.pointA = pointA;
     }
 
-    public Point getPointB() {
+    public MultiPoint getPointB() {
         return pointB;
     }
 
-    public void setPointB(Point pointB) {
+    public void setPointB(MultiPoint pointB) {
         this.pointB = pointB;
     }
 

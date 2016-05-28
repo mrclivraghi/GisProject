@@ -2,13 +2,18 @@ package it.polimi.gis.core;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.geotools.data.DataStore;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.vividsolutions.jts.geom.Point;
 
 import it.polimi.gis.model.Pair;
+import it.polimi.gis.repository.PairRepository;
 
+@Service
 public class MapTransformImpl implements MapTransform {
 	
 	private DataStore sourceDataStore;
@@ -18,6 +23,9 @@ public class MapTransformImpl implements MapTransform {
 	private ArrayList<Point> sourcePoints;
 	private ArrayList<Point> targetPoints;
 	private ArrayList<Pair> pairs;
+	
+	@Autowired
+	PairRepository pairRepository;
 	
 
 	@Override
@@ -63,8 +71,8 @@ public class MapTransformImpl implements MapTransform {
 
 	@Override
 	public ArrayList<Pair> findHomologousPoints() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Pair> homologousPoints= pairRepository.findByProject("test_omologhi");
+		return (ArrayList<Pair>) homologousPoints;
 	}
 
 	@Override

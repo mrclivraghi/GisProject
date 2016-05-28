@@ -7,7 +7,7 @@
     .controller('MainController', MainController);
 
   /** @ngInject */
-  function MainController($scope,MarkerService,$log,mainService) {
+  function MainController($scope,$rootScope,MarkerService,$log,mainService) {
     var vm = this;
 	
 	vm.markerPairList={};
@@ -297,6 +297,33 @@ $scope.$on('leafletDirectiveMap.map1.contextmenu.select', function(event, args){
 		});
 	}
 	
+	function runAlgorithm()
+	{
+		MarkerService.send(vm.markerPairList).then(function successCallback(response) {
+				console.log(response);
+				
+				console.log($rootScope.associationList);
+				console.log($rootScope.parameters);
+				
+							MarkerService.runAlgorithm($rootScope.parameters,$rootScope.associationList).then(function successCallback(response) {
+				
+							},function errorCallback(response) { 
+								console.log("error");	
+								return; 
+							});			
+
+				
+				
+				
+				
+},function errorCallback(response) { 
+	console.log("error");
+	return; 
+});
+	
+	}
+	
+	
 	searchMapFile();
 	
 	vm.addMarker1=addMarker1;
@@ -309,6 +336,7 @@ $scope.$on('leafletDirectiveMap.map1.contextmenu.select', function(event, args){
 	vm.removeMarker1=removeMarker1;
 	vm.removeMarker2=removeMarker2;
 	vm.removeMarker=removeMarker;
+	vm.runAlgorithm=runAlgorithm;
 	
     }
 })();
