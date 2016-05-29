@@ -1,0 +1,22 @@
+<gis-navbar></gis-navbar>
+<div class="container">
+<div class="row">
+</div>
+	<div class="row">
+		<div class="col-md-9">
+			<leaflet id="map" width="100%" height="480px" markers="vm.markers" layers="vm.layers" lf-center="vm.center"></leaflet>
+		</div>
+		<div class="col-md-3">
+			 <uib-accordion>
+			
+				<uib-accordion-group heading="{{key}}" ng-repeat="(key,stat) in vm.statistics | limitTo: 10" >
+					{{key}}: {{stat}} <br>
+				</uib-accordion-group>
+			
+			</uib-accordion>
+		</div>
+		
+	</div>
+
+
+</div>

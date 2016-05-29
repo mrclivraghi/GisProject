@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.geotools.data.DataStore;
 import org.geotools.data.FeatureSource;
@@ -87,7 +88,7 @@ public class MapTransformImpl implements MapTransform {
 	@Override
 	public DataStore transform(ArrayList<Pair> pairs) {
 		File fileTest = new File("");
-    	File file= new File(fileTest.getAbsolutePath()+"/SW_Ricerca_Punti_Omologhi/FakeResult/resultMap.shp");
+    	File file= new File(fileTest.getAbsolutePath()+"/SW_Ricerca_Punti_Omologhi/FakeResult/result.shp");
     	
     	DataStore dataStore=null;
     	ShapefileDataStoreFactory f = new ShapefileDataStoreFactory();
@@ -99,6 +100,18 @@ public class MapTransformImpl implements MapTransform {
 		}
     	
     	return dataStore;
+	}
+
+	@Override
+	public Map getStatistics() {
+		Map<String,String> stats= new HashMap<String,String>();
+		stats.put("precision", "0.78");
+		stats.put("precision", "0.78");
+		stats.put("precision", "0.78");
+		stats.put("precision", "0.78");
+		
+		
+		return stats;
 	}
 
 }

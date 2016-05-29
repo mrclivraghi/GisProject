@@ -6,6 +6,8 @@ import it.polimi.gis.model.Pair;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
+
 import org.geotools.data.DataStore;
 
 public interface MapTransform {
@@ -87,5 +89,8 @@ public interface MapTransform {
      * @return the transformed map
      */
     public DataStore transform(ArrayList<Pair> pairs);
+    
+    
+    public Map getStatistics();
 
 }

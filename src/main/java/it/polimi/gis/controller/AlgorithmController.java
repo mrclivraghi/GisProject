@@ -143,9 +143,11 @@ public class AlgorithmController {
 	    	if (markerArray!=null && markerArray.length>0)
 	    	{
 	    		for (int i=0; i<markerArray.length; i++)
+	    			if (markerArray[i].getMarker1()!=null && markerArray[i].getMarker2()!=null)
 	    		{
 	    			Pair pair = new Pair();
 	    			GeometryFactory gf = new GeometryFactory();
+	    			
 	    			Coordinate coord = new Coordinate(markerArray[i].getMarker1().getLng(), markerArray[i].getMarker1().getLat());
 	    			Point[] pointArr= new Point[1];
 	    			pointArr[0]=gf.createPoint(coord);
@@ -199,16 +201,27 @@ public class AlgorithmController {
 	    	    	MapFile newMapFile = new MapFile();
 	    	    	newMapFile.setFilePath(shapeFile.getAbsolutePath());
 	    	    	newMapFile.setWorkSpace("gisProject");
-	    	    	newMapFile.setName(shapeFile.getName().replaceAll(".zip", ""));
+	    	    	newMapFile.setName(shapeFile.getName().replaceAll(".shp", ""));
 	    	    	
-	    	    	mapFileService.insert(newMapFile);
+	    	    	//mapFileService.insert(newMapFile);
 	    	    	
 	    	    	geoServerService.loadZipFile(new File(zipFilePath));
 	    	    	
 	    	}
 	    	
-	    	return ResponseEntity.ok().body(null);
+	    	return ResponseEntity.ok().body(shapeFile.getName().replace(".shp", ""));
 	    	
+	    }
+	    
+	    
+	    
+	    @ResponseBody
+	    @RequestMapping(method = RequestMethod.POST,value="/statistics")
+	    public ResponseEntity getStatistics()
+	    {
+	    	Map stats=mapTransform.getStatistics();
+	    	
+	    	return ResponseEntity.ok().body(stats);
 	    }
 	    
 	    

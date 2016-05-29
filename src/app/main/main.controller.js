@@ -7,7 +7,7 @@
     .controller('MainController', MainController);
 
   /** @ngInject */
-  function MainController($scope,$rootScope,MarkerService,$log,mainService) {
+  function MainController($scope,$rootScope,MarkerService,$log,mainService,$state) {
     var vm = this;
 	
 	vm.markerPairList={};
@@ -358,7 +358,7 @@ $scope.$on('leafletDirectiveMap.map1.contextmenu.select', function(event, args){
 	
 	function getResult(){
 		MarkerService.getResult(vm.markerPairList).then(function successCallback(response) {
-			
+				$state.go('result',{resultLayer: response.data});
 		},function errorCallback(response) { 
 			console.log("error");
 			return; 

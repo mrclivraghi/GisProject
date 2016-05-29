@@ -20,6 +20,12 @@
         controller: 'UploadMapController',
         controllerAs: 'vm'
       })
+	  .state('result', {
+        url: '/result/:resultLayer',
+        templateUrl: 'app/controller/result/result.html',
+        controller: 'ResultController',
+        controllerAs: 'vm'
+      })
 	  .state('configuration', {
         url: '/configuration',
         templateUrl: 'app/controller/configuration/configuration.html',

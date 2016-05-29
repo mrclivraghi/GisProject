@@ -20,6 +20,11 @@ function MainService($http)
 			var promise= $http.post("http://127.0.0.1:8080/GisProjectServer/mapFile/search",{});
 			return promise; 
 		}
+		
+		this.getStats= function(){
+			var promise= $http.post("http://127.0.0.1:8080/GisProjectServer/algorithm/statistics");
+			return promise; 
+		}
 
 }
 })();
