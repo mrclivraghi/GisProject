@@ -39,11 +39,32 @@
 			</div>	
 			
 		
-			<div class="panel panel-default">
+			<div class="panel panel-default" ng-if="$root.layer1 && $root.layer2">
 				<div class="panel-heading">
 					Configuration
 				</div>
 				<div class="panel-body">
+				
+				<div class="row">
+				
+					<div class="col-md-3 col-md-offset-1">
+						<div class="input-group">
+								<span class="input-group-addon" id="basic-addon2"> {{$root.layer1}}</span>
+								<input type="text" ng-model="$root.featureType1" placeholder="FeatureType" class="form-control" style="width:150px">
+								<span class="input-group-addon" id="basic-addon2" ng-click="vm.getFeatures($root.layer1,$root.featureType1)"> Scan</span>
+						</div>
+						
+					</div>
+					<div class="col-md-3  col-md-offset-1">
+						<div class="input-group">
+								<span class="input-group-addon" id="basic-addon2"> {{$root.layer2}}</span>
+								<input type="text" ng-model="$root.featureType2" placeholder="FeatureType" class="form-control" style="width:150px">
+								<span class="input-group-addon" id="basic-addon2" ng-click="vm.getFeatures($root.layer2,$root.featureType2)"> Scan</span>
+						</div>
+					</div>
+				</div>
+				
+				<hr>
 				
 				<div class="row">
 				
@@ -79,7 +100,7 @@
 				</div> <!-- close panel body -->
 			</div>
 			
-			<div class="panel panel-default">
+			<div class="panel panel-default" ng-if="$root.associationList.length>0">
 						<div class="panel-heading">
 							Association list
 						</div>

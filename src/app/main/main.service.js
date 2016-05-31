@@ -25,6 +25,12 @@ function MainService($http)
 			var promise= $http.post("http://127.0.0.1:8080/GisProjectServer/algorithm/statistics");
 			return promise; 
 		}
-
+		
+		this.getGeoJSON= function(layerName){
+		
+		var promise=$http.get("http://localhost:8081/geoserver/gisProject/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=gisProject:"+layerName+"&maxFeatures=100&outputFormat=application/json");
+		return promise;
+		
+		}
 }
 })();

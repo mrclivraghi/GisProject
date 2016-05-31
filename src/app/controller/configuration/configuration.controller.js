@@ -6,13 +6,13 @@
     .controller('ConfigurationController', ConfigurationController);
 
   /** @ngInject */
-  function ConfigurationController($scope,$log,$rootScope) {
+  function ConfigurationController($scope,$log,$rootScope,mainService) {
     var vm = this;
 	
 	vm.associationName;
 	
-	vm.class1=['building','square','office'];
-	vm.class2=['edificio'];
+	vm.class1=[];
+	vm.class2=[];
 	
 	vm.selectionValue=[];
 	
@@ -40,17 +40,26 @@
 	
 	}
 	
-	function test()
+	function getFeatures(layerName,featureType)
 	{
-	
-		console.log($rootScope.parameters);
+		mainService.getGeoJSON(layerName).then(function successCallback(response) {
+				for (var i=0; i<response.data.features.length; i++)
+				{
+					var value=response.data.features[i].properties[featureType];
+					if (vm.class1.indexOf(value)<0 && value!="")
+						vm.class1.push(value);
+				}
+		},function errorCallback(response) { 
+			console.log("error");
+			return; 
+		});
 	}
 	
-	
+	//getFeatures("OSM_00_4326_attr","TYPE");
 	
 	
 	vm.associate=associate;
-	vm.test=test;
+	vm.getFeatures=getFeatures;
 	
     }
 })();

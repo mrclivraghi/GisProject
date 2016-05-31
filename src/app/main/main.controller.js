@@ -22,10 +22,13 @@
 	{
 	var item=Number($(".leaflet-contextmenu-item").text().replace("Remove marker #",""));
 	$(".leaflet-contextmenu-item").remove();
-	delete vm.markers1[(item+1)];
-	delete vm.markerPairList[item].marker1;
-	if (vm.markerPairList[item].marker2==null)
-		vm.markerPairList.splice(item,1);
+	console.log("item:"+item);
+	delete vm.markers1[(item)];
+	console.log(vm.markerPairList);
+	delete vm.markerPairList[item-1].marker1;
+	if (vm.markerPairList[item-1].marker2==null)
+		vm.markerPairList.splice(item-1,1);
+	console.log(vm.markers1);
 	vm.markers1Count--;
 	}
 	
@@ -33,10 +36,10 @@
 	{
 		var item=Number($(".leaflet-contextmenu-item").text().replace("Remove marker #",""));
 	$(".leaflet-contextmenu-item").remove();
-	delete vm.markers2[(item+1)];
-	delete vm.markerPairList[item].marker2;
-	if (vm.markerPairList[item].marker1==null)
-		vm.markerPairList.splice(item,1);
+	delete vm.markers2[(item)];
+	delete vm.markerPairList[item-1].marker2;
+	if (vm.markerPairList[item-1].marker1==null)
+		vm.markerPairList.splice(item-1,1);
 	vm.markers2Count--;
 	
 	}
@@ -63,7 +66,7 @@
 		  icon: 'http://files.softicons.com/download/toolbar-icons/16x16-free-application-icons-by-aha-soft/ico/Application.ico',
 		  iconCls: 'Test',
 		  hideOnSelect: false,
-          callback: function(test) { vm.removeMarker1(test)}
+          callback: function() { vm.removeMarker1()}
         }];
 					 vm.markers2[(i+1)].contextmenu=true;
 					 vm.markers2[(i+1)].contextmenuWidth=140;
@@ -72,7 +75,7 @@
 		  icon: 'http://files.softicons.com/download/toolbar-icons/16x16-free-application-icons-by-aha-soft/ico/Application.ico',
 		  iconCls: 'Test',
 		  hideOnSelect: false,
-          callback: function() { vm.removeMarker2((i+1))}
+          callback: function() { vm.removeMarker2()}
         }];
 				}
 				vm.markers1Count=vm.markerPairList.length;
@@ -156,7 +159,16 @@ $scope.$on('leafletDirectiveMap.map1.contextmenu.select', function(event, args){
 			lng:longitude,
 			focus: true,
 			message: 'Marker #'+vm.markers1Count,
-			draggable: true
+			draggable: true,
+			contextmenu: true,
+			contextmenuWidth: 140,
+			contextmenuItems: [{
+          text: 'Remove marker #'+vm.markers1Count,
+		  icon: 'http://files.softicons.com/download/toolbar-icons/16x16-free-application-icons-by-aha-soft/ico/Application.ico',
+		  iconCls: 'Test',
+		  hideOnSelect: false,
+          callback: function() { vm.removeMarker1()}
+        }]
 		};
 		
 		if (!vm.markerPairList[vm.markers1Count-1])
@@ -180,7 +192,16 @@ $scope.$on('leafletDirectiveMap.map1.contextmenu.select', function(event, args){
 			lng:longitude,
 			focus: true,
 			message: 'Marker #'+vm.markers2Count,
-			draggable: true
+			draggable: true,
+			contextmenu: true,
+			contextmenuWidth: 140,
+			contextmenuItems: [{
+          text: 'Remove marker #'+vm.markers2Count,
+		  icon: 'http://files.softicons.com/download/toolbar-icons/16x16-free-application-icons-by-aha-soft/ico/Application.ico',
+		  iconCls: 'Test',
+		  hideOnSelect: false,
+          callback: function() { vm.removeMarker2()}
+        }]
 		};
 		
 		
@@ -268,9 +289,15 @@ $scope.$on('leafletDirectiveMap.map1.contextmenu.select', function(event, args){
 		
 		
 		if (mapIndex==1)
+		{
 			vm.layers1.overlays[vm.layerName]=newLayer;
+			$rootScope.layer1=newLayer.name;
+			}
 		else
+		{
+			$rootScope.layer2=newLayer.name;
 			vm.layers2.overlays[vm.layerName]=newLayer;
+		}
 	
 	}
 	
@@ -354,6 +381,7 @@ $scope.$on('leafletDirectiveMap.map1.contextmenu.select', function(event, args){
 });
 	
 	}
+	
 	
 	
 	function getResult(){
