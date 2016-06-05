@@ -36,6 +36,7 @@
 	{
 		var item=Number($(".leaflet-contextmenu-item").text().replace("Remove marker #",""));
 	$(".leaflet-contextmenu-item").remove();
+	console.log("item:"+item);
 	delete vm.markers2[(item)];
 	delete vm.markerPairList[item-1].marker2;
 	if (vm.markerPairList[item-1].marker1==null)
@@ -62,7 +63,7 @@
 					 vm.markers1[(i+1)].contextmenuWidth=140;
 					 
 					vm.markers1[(i+1)].contextmenuItems=[{
-          text: 'Remove marker #'+i,
+          text: 'Remove marker #'+(i+1),
 		  icon: 'http://files.softicons.com/download/toolbar-icons/16x16-free-application-icons-by-aha-soft/ico/Application.ico',
 		  iconCls: 'Test',
 		  hideOnSelect: false,
@@ -71,7 +72,7 @@
 					 vm.markers2[(i+1)].contextmenu=true;
 					 vm.markers2[(i+1)].contextmenuWidth=140;
 					vm.markers2[(i+1)].contextmenuItems=[{
-           text: 'Remove marker #'+i,
+           text: 'Remove marker #'+(i+1),
 		  icon: 'http://files.softicons.com/download/toolbar-icons/16x16-free-application-icons-by-aha-soft/ico/Application.ico',
 		  iconCls: 'Test',
 		  hideOnSelect: false,
@@ -239,9 +240,11 @@ $scope.$on('leafletDirectiveMap.map1.contextmenu.select', function(event, args){
 	function removeMarker()
 	{
 		MarkerService.remove().then(function successCallback(response) {
-				vm.markerPairList={};
+				vm.markerPairList=[];
 				vm.markers1={};
 				vm.markers2={};
+				vm.markers1Count=0;
+				vm.markers2Count=0;
 },function errorCallback(response) { 
 	console.log("error");
 	return; 
@@ -348,7 +351,7 @@ $scope.$on('leafletDirectiveMap.map1.contextmenu.select', function(event, args){
 					 vm.markers1[(i+1)].contextmenuWidth=140;
 					 
 					vm.markers1[(i+1)].contextmenuItems=[{
-          text: 'Remove marker #'+i,
+          text: 'Remove marker #'+(i+1),
 		  icon: 'http://files.softicons.com/download/toolbar-icons/16x16-free-application-icons-by-aha-soft/ico/Application.ico',
 		  iconCls: 'Test',
 		  hideOnSelect: false,
@@ -357,7 +360,7 @@ $scope.$on('leafletDirectiveMap.map1.contextmenu.select', function(event, args){
 					 vm.markers2[(i+1)].contextmenu=true;
 					 vm.markers2[(i+1)].contextmenuWidth=140;
 					vm.markers2[(i+1)].contextmenuItems=[{
-           text: 'Remove marker #'+i,
+           text: 'Remove marker #'+(i+1),
 		  icon: 'http://files.softicons.com/download/toolbar-icons/16x16-free-application-icons-by-aha-soft/ico/Application.ico',
 		  iconCls: 'Test',
 		  hideOnSelect: false,

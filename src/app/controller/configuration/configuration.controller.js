@@ -36,18 +36,25 @@
 		}
 		
 		$rootScope.associationList=vm.associationList;
-		
+		console.log($rootScope.associationList);
 	
 	}
 	
-	function getFeatures(layerName,featureType)
+	function getFeatures(layerName,featureType,numClass)
 	{
 		mainService.getGeoJSON(layerName).then(function successCallback(response) {
+			console.log(numClass);
 				for (var i=0; i<response.data.features.length; i++)
 				{
 					var value=response.data.features[i].properties[featureType];
-					if (vm.class1.indexOf(value)<0 && value!="")
-						vm.class1.push(value);
+					if (numClass==1){
+						if (vm.class1.indexOf(value)<0 && value!="")
+							vm.class1.push(value);
+					}
+					else{
+						if (vm.class2.indexOf(value)<0 && value!="")
+							vm.class2.push(value);
+					}
 				}
 		},function errorCallback(response) { 
 			console.log("error");

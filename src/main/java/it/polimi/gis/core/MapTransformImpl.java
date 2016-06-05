@@ -105,12 +105,9 @@ public class MapTransformImpl implements MapTransform {
 	@Override
 	public Map getStatistics() {
 		Map<String,String> stats= new HashMap<String,String>();
-		stats.put("precision", "0.78");
-		stats.put("precision", "0.78");
-		stats.put("precision", "0.78");
-		stats.put("precision", "0.78");
-		
-		
+		stats.put("Precision", "0.78");
+		stats.put("Mean error", "0.12");
+		stats.put("Standard deviation", "1.05");
 		return stats;
 	}
 

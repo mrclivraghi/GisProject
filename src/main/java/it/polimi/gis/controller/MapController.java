@@ -53,6 +53,7 @@ public class MapController {
 	    	if (markerArray!=null && markerArray.length>0)
 	    	{
 	    		for (int i=0; i<markerArray.length; i++)
+	    		if (markerArray[i].getMarker1()!=null && markerArray[i].getMarker2()!=null)
 	    		{
 	    			Pair pair = new Pair();
 	    			GeometryFactory gf = new GeometryFactory();

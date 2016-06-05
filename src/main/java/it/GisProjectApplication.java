@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.retry.annotation.EnableRetry;
 
 import it.anggen.utils.HibernateAwareObjectMapper;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -22,6 +23,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableAutoConfiguration
 @SpringBootApplication
 @EnableCaching
+@EnableRetry
 public class GisProjectApplication {
 
 

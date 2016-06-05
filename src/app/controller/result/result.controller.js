@@ -7,7 +7,7 @@
     .controller('ResultController', ResultController);
 
   /** @ngInject */
-  function ResultController($scope,$rootScope,mainService,$stateParams) {
+  function ResultController($scope,$rootScope,mainService,$stateParams,$http) {
     var vm = this;
 	
 	
@@ -45,6 +45,7 @@
                             }
 	};
 	vm.layers.overlays[$stateParams.resultLayer]=newLayer;
+	$rootScope.resultLayer=newLayer;
 	/*function addLayer(mapIndex)
 	{
 		var newLayer;
@@ -94,10 +95,15 @@
 		});
 		
 	}
-	
 	getStats();
-
-
 	
+	function download()
+	{
+		return "http://localhost:8081/geoserver/gisProject/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=gisProject:"+$rootScope.resultLayer.name+"&outputFormat=SHAPE-ZIP";
     }
+	
+	vm.download=download;
+	
+	}
+	
 })();

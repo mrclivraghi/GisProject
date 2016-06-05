@@ -3,22 +3,23 @@
 <div class="row">
 </div>
 	<div class="row">
-		<div class="col-md-5">
+		<div class="col-md-4">
 			<leaflet id="map1" width="100%" height="480px" markers="vm.markers1" layers="vm.layers1" lf-center="vm.center1"></leaflet>
 		</div>
-		<div class="col-md-5">
+		<div class="col-md-4">
 			 <leaflet id="map2" width="100%" height="480px" markers="vm.markers2"  layers="vm.layers2" lf-center="vm.center2"></leaflet>
 		</div>
-		<div class="col-md-2">
+		<div class="col-md-4">
 			<uib-accordion>
 			
 				<uib-accordion-group heading="Marker{{markerPair.markerPairId}}" ng-repeat="markerPair in vm.markerPairList | limitTo: 10" ng-click="vm.highLightMarker($index+1)">
-					marker1: {{markerPair.marker1.lat | number: 2}}, {{markerPair.marker1.lng | number:2}} <br>
-					marker1: {{markerPair.marker2.lat | number: 2}}, {{markerPair.marker2.lng | number:2}}
+					marker1: {{markerPair.marker1.lat | number: 6}}, {{markerPair.marker1.lng | number:6}} <br>
+					marker2: {{markerPair.marker2.lat | number: 6}}, {{markerPair.marker2.lng | number:6}}
 				</uib-accordion-group>
 			
 			</uib-accordion>
 			<div class="input-group input-group-btn">
+				<input type="button" class="btn btn-default" ng-click="vm.sendMarker()" value="SAVE">
 				<input type="button" class="btn btn-default" ng-click="vm.removeMarker()" value="REMOVE">
 				<input type="button" class="btn btn-default" ng-click="vm.runAlgorithm()" value="RUN">
 				<input type="button" class="btn btn-default" ng-click="vm.getResult()" value="RESULT">
@@ -34,8 +35,9 @@
 			</div>
 			<div class="panel-body">
 				<div class="input-group">
+				<span class="input-group-addon" id="basic-addon2" >WMS</span>
 					<input type="text" ng-model="vm.wmsUrl" placeholder="Geoserver url" class="form-control">
-					<span class="input-group-addon" id="basic-addon2" >WMS</span>
+					
 				</div>
 				
 				<div class="input-group">
@@ -43,8 +45,9 @@
 					<input type="text" ng-model="vm.layerName" placeholder="Layer name" class="form-control">
 				</div>
 				<div class="input-group">
+				<span class="input-group-addon" id="basic-addon2" >Layer</span>
 					<input type="text" ng-model="vm.layer" placeholder="Layer" class="form-control">
-					<span class="input-group-addon" id="basic-addon2" >Layer</span>
+					
 				</div>
 				<div class="center-block">
 					<input type="button" class="btn btn-default" value="AddMap1" ng-click="vm.addLayer(1)">
@@ -63,7 +66,7 @@
 			</div>
 			<div class="panel-body">
 				<div class="input-group">
-					<select ng-model="vm.selectedMapFile" ng-options="mapFile.name for mapFile in vm.mapFileList" ng-class="form-control">
+					<select ng-model="vm.selectedMapFile" ng-options="mapFile.name for mapFile in vm.mapFileList" class="form-control">
 					</select>
 					<span class="input-group-addon" id="basic-addon2" >WMS</span>
 				</div>
@@ -86,8 +89,9 @@
 			</div>
 			<div class="panel-body">
 				<div class="input-group">
+				<span class="input-group-addon" id="basic-addon2" >Lat</span>
 					<input type="text" ng-model="vm.centerLat" placeholder="Latitude" class="form-control">
-					<span class="input-group-addon" id="basic-addon2" >Lat</span>
+					
 				</div>
 				
 				<div class="input-group">
