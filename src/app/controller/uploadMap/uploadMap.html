@@ -1,0 +1,55 @@
+<gis-navbar></gis-navbar>
+<div class="container">
+	<div class="row">
+	</div>
+	<div class="row">
+	
+	<div class="panel panel-default">
+		<div class="panel panel-heading">
+			Upload a map
+		</div>
+		<div class="panel-body">
+	
+		<div class="" style="height:59px" ng-show="true ">
+	<div class="input-group">
+		<span class="input-group-addon">map
+		</span>
+
+		<div tabindex="500" class="form-control file-caption  kv-fileinput-caption">
+			<div class="file-caption-name" title="">
+				<span class="glyphicon glyphicon-file kv-caption-icon"></span>
+						{{vm.map}}
+				</div>
+
+			</div>
+
+			<div class="input-group-btn">
+				<button ng-click="vm.loadFile(null,&#39;Map&#39;)" type="button" tabindex="500" title="Clear selected files" class="btn btn-default fileinput-remove fileinput-remove-button">
+					<i class="glyphicon glyphicon-trash">
+					</i>
+
+					<span class="hidden-xs">Remove
+					</span>
+
+				</button>
+
+				<div ng-if="vm.map==undefined" class="btn btn-primary btn-file" ngf-select="vm.loadFile($file,&#39;Map&#39;)">
+					<i class="glyphicon glyphicon-folder-open"></i>
+Browse
+					</div>
+
+					<div class="btn btn-primary" ng-if="vm.map!=undefined" ng-click="vm.openFile(vm.map)">
+						<i class="glyphicon glyphicon-folder-open"></i>
+Open
+						</div>
+
+					</div>
+
+				</div>
+	</div>	
+		
+
+</div>
+
+</div>
+</div>
