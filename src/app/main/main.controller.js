@@ -10,13 +10,24 @@
   function MainController($scope,$rootScope,MarkerService,$log,mainService,$state) {
     var vm = this;
 	
+	vm.showResult=false;
 	vm.markerPairList={};
+	
 	vm.markers1={
 		
 	};
 	vm.markers2={
 		
 	};
+	
+	vm.customIcon={
+            iconUrl: 'assets/images/end_point.png',
+             iconSize:     [15, 15], // size of the icon
+           /* shadowSize:   [50, 64], // size of the shadow
+            iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+            shadowAnchor: [4, 62],  // the same for the shadow
+            popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+        */};
 	
 	function removeMarker1(e)
 	{
@@ -59,6 +70,10 @@
 					vm.markers1[(i+1)].draggable=true;
 					vm.markers2[(i+1)].focus=false;
 					vm.markers2[(i+1)].draggable=true;
+					
+					vm.markers1[(i+1)].icon=vm.customIcon;
+					vm.markers2[(i+1)].icon=vm.customIcon;
+					
 					 vm.markers1[(i+1)].contextmenu=true;
 					 vm.markers1[(i+1)].contextmenuWidth=140;
 					 
@@ -161,6 +176,7 @@ $scope.$on('leafletDirectiveMap.map1.contextmenu.select', function(event, args){
 			focus: true,
 			message: 'Marker #'+vm.markers1Count,
 			draggable: true,
+			icon : vm.customIcon,
 			contextmenu: true,
 			contextmenuWidth: 140,
 			contextmenuItems: [{
@@ -194,6 +210,7 @@ $scope.$on('leafletDirectiveMap.map1.contextmenu.select', function(event, args){
 			focus: true,
 			message: 'Marker #'+vm.markers2Count,
 			draggable: true,
+			icon : vm.customIcon,
 			contextmenu: true,
 			contextmenuWidth: 140,
 			contextmenuItems: [{
@@ -346,8 +363,13 @@ $scope.$on('leafletDirectiveMap.map1.contextmenu.select', function(event, args){
 					vm.markers1[(i+1)].focus=false;
 					vm.markers1[(i+1)].draggable=true;
 					vm.markers2[(i+1)].focus=false;
+					
 					vm.markers2[(i+1)].draggable=true;
 					 vm.markers1[(i+1)].contextmenu=true;
+
+					 vm.markers1[(i+1)].icon=vm.customIcon;
+					vm.markers2[(i+1)].icon=vm.customIcon;
+					
 					 vm.markers1[(i+1)].contextmenuWidth=140;
 					 
 					vm.markers1[(i+1)].contextmenuItems=[{
@@ -369,6 +391,7 @@ $scope.$on('leafletDirectiveMap.map1.contextmenu.select', function(event, args){
 				}
 				vm.markers1Count=vm.markerPairList.length;
 				vm.markers2Count=vm.markerPairList.length;
+				vm.showResult=true;
 							},function errorCallback(response) { 
 								console.log("error");	
 								return; 

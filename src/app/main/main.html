@@ -10,19 +10,23 @@
 			 <leaflet id="map2" width="100%" height="480px" markers="vm.markers2"  layers="vm.layers2" lf-center="vm.center2"></leaflet>
 		</div>
 		<div class="col-md-4">
-			<uib-accordion>
+		
 			
-				<uib-accordion-group heading="Marker{{markerPair.markerPairId}}" ng-repeat="markerPair in vm.markerPairList | limitTo: 10" ng-click="vm.highLightMarker($index+1)">
+			<uib-accordion style="height: 250px">
+			
+				<uib-accordion-group heading="Marker{{markerPair.markerPairId}}" ng-repeat="markerPair in vm.markerPairList | limitTo: 9" ng-click="vm.highLightMarker($index+1)">
 					marker1: {{markerPair.marker1.lat | number: 6}}, {{markerPair.marker1.lng | number:6}} <br>
 					marker2: {{markerPair.marker2.lat | number: 6}}, {{markerPair.marker2.lng | number:6}}
 				</uib-accordion-group>
 			
 			</uib-accordion>
+			
+			
 			<div class="input-group input-group-btn">
 				<input type="button" class="btn btn-default" ng-click="vm.sendMarker()" value="SAVE">
 				<input type="button" class="btn btn-default" ng-click="vm.removeMarker()" value="REMOVE">
 				<input type="button" class="btn btn-default" ng-click="vm.runAlgorithm()" value="RUN">
-				<input type="button" class="btn btn-default" ng-click="vm.getResult()" value="RESULT">
+				<input type="button" class="btn btn-default" ng-click="vm.getResult()" ng-if="vm.showResult" value="RESULT">
 			</div>
 		</div>
 	</div>
