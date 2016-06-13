@@ -1,6 +1,7 @@
 package it.polimi.gis.model;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
@@ -8,6 +9,7 @@ import org.hibernate.annotations.Type;
 
 import com.vividsolutions.jts.geom.Point;
 
+@Entity
 public class LayerPoint {
 
 	@Id

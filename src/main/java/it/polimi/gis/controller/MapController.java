@@ -37,6 +37,7 @@ import com.vividsolutions.jts.geom.Point;
 import io.swagger.annotations.ApiOperation;
 import it.anggen.searchbean.entity.EntitySearchBean;
 import it.polimi.gis.core.MapTransform;
+import it.polimi.gis.model.LayerPoint;
 import it.polimi.gis.model.Marker;
 import it.polimi.gis.model.MarkerPair;
 import it.polimi.gis.model.Pair;
@@ -58,7 +59,7 @@ public class MapController {
 	MapTransform mapTransform;
 	
 	
-	private String getJson(String layerName)
+	private void getJson(String layerName)
 	{
 		URL website;
 		 StringBuilder response = new StringBuilder();
@@ -76,6 +77,48 @@ public class MapController {
 	            response.append(inputLine);
 
 	        in.close();
+	        
+	        String layerJson=response.toString();
+	        
+	        ObjectMapper mapper = new ObjectMapper();
+	    	try {
+				Map<String,Object> mappedObject =(java.util.Map<String, Object>) mapper.readValue(layerJson, Map.class);
+				List<Map<String,Object>> featureList=(List<Map<String, Object>>) mappedObject.get("features");
+				Integer count=0;
+				for (Map<String,Object> feature: featureList)
+				{
+
+
+					Map<String,Object> geometry=(Map<String, Object>) featureList.get(0).get("geometry");
+					List<List<List<List<Double>>>> coordinatesList= (List<List<List<List<Double>>>>) geometry.get("coordinates");
+					
+					for (List<List<List<Double>>> coord1 : coordinatesList)
+					{
+						for (List<List<Double>> coord2 : coord1)
+						{
+							for (List<Double> coord3: coord2)
+								{
+									LayerPoint layerPoint = new LayerPoint();
+									layerPoint.setLayerName(layerName);
+									GeometryFactory gf = new GeometryFactory();
+					    			Coordinate coord = new Coordinate(coord3.get(0), coord3.get(1));
+					    			layerPoint.setPoint(gf.createPoint(coord));
+					    			layerPointRepository.save(layerPoint);
+									
+								}
+						}
+					}
+				}
+				System.out.println(count);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+
+
+	        
+	        
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -84,7 +127,6 @@ public class MapController {
 			e.printStackTrace();
 		}
         
-        return response.toString();
 	}
 	
 	
@@ -96,25 +138,12 @@ public class MapController {
 	        @org.springframework.web.bind.annotation.RequestBody
 	        MarkerPair[] markerArray) {
 	    	
-	    	
-	    	String layer1Json = getJson(layer1);
-	    	String layer2Json=getJson(layer2);
-	    	
 	    	layerPointRepository.deleteLayerPoint();
-	    	ObjectMapper mapper = new ObjectMapper();
-	    	try {
-				Map<String,Object> mappedObject =(java.util.Map<String, Object>) mapper.readValue(layer1Json, Map.class);
-				List<Map<String,Object>> featureList=(List<Map<String, Object>>) mappedObject.get("features");
-				Map<String,Object> geometry=(Map<String, Object>) featureList.get(0).get("geometry");
-				List<List<List<String>>> coordinatesList= (List<List<List<String>>>) geometry.get("coordinates");
-				
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 	    	
+	    	getJson(layer1);
+	    	getJson(layer2);
 	    	
-	    	
+	    		    	
 	    	pairRepository.deleteCustomMarkers();
 	    	Date now = new Date();
 	    	SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
