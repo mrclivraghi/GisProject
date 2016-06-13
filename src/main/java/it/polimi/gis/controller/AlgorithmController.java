@@ -52,6 +52,7 @@ import it.polimi.gis.model.Marker;
 import it.polimi.gis.model.MarkerPair;
 import it.polimi.gis.model.Pair;
 import it.polimi.gis.model.bean.AlgorithmBean;
+import it.polimi.gis.repository.LayerPointRepository;
 import it.polimi.gis.repository.PairRepository;
 import it.polimi.gis.service.GeoServerService;
 import it.polimi.gis.service.MapFileService;
@@ -74,10 +75,16 @@ public class AlgorithmController {
 	@Autowired
 	GeoServerService geoServerService;
 	
+	@Autowired
+	LayerPointRepository layerPointRepository;
+	
 	    @ResponseBody
 	    @RequestMapping(method = RequestMethod.POST)
 	    public ResponseEntity run(
 	        @RequestBody AlgorithmBean algorithmBean) {
+	    	
+	    	String layer1="DBT_00_4326";
+	    	String layer2="OSM_00_4326";
 	    	
 	    	mapTransform.setParameters(createParametersMap(algorithmBean));
 	    	mapTransform.setSemantics(createAssociationMap(algorithmBean));
@@ -93,8 +100,8 @@ public class AlgorithmController {
 	    	mapTransform.setTargetPoints(targetPoints);
 	    	mapTransform.setPairs((ArrayList<Pair>) pairList);
 	    	
-	    	DataStore sourceDataStore=loadDataStore("DBT_00_4326.shp");
-	    	DataStore targetDataStore=loadDataStore("OSM_00_4326.shp");
+	    	DataStore sourceDataStore=loadDataStore(layer1+".shp");
+	    	DataStore targetDataStore=loadDataStore(layer2+".shp");
 	    	mapTransform.setDataStoreSource(sourceDataStore);
 	    	mapTransform.setDataStoreTarget(targetDataStore);
 	    	
@@ -149,6 +156,8 @@ public class AlgorithmController {
 	    			GeometryFactory gf = new GeometryFactory();
 	    			
 	    			Coordinate coord = new Coordinate(markerArray[i].getMarker1().getLng(), markerArray[i].getMarker1().getLat());
+	    			
+	    			
 	    			Point[] pointArr= new Point[1];
 	    			pointArr[0]=gf.createPoint(coord);
 	    			pair.setPointA(gf.createMultiPoint(pointArr));

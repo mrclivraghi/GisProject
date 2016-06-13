@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,5 +30,7 @@ public interface LayerPointRepository
    
     public List<LayerPoint> findByLayerName(String layerName);
     
-
+    @Query(nativeQuery=true,value="select l from LayerPoint l where layerName=:layerName order by ST_distance(ST_GeomFromText('POINT(:latitude :lng)'),l.point) asc ")
+    public List<LayerPoint> findClosest(@Param("latitude") Double lat,@Param("lng") Double lng,@Param("layerName")String layerName);
+    
 }
