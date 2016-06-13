@@ -1,7 +1,11 @@
 {
   "name": "gisproject",
   "version": "0.0.0",
-  "dependencies": {},
+  "dependencies": {
+    "ansi-styles": "^2.2.1",
+    "body-parser": "^1.15.1",
+    "karma": "^0.13.22"
+  },
   "scripts": {
     "test": "gulp test"
   },
