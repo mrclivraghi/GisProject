@@ -154,13 +154,19 @@ public class MapController {
 	    		{
 	    			Pair pair = new Pair();
 	    			GeometryFactory gf = new GeometryFactory();
-	    			Coordinate coord = new Coordinate(markerArray[i].getMarker1().getLng(), markerArray[i].getMarker1().getLat());
-	    			Point[] pointArr= new Point[1];
-	    			pointArr[0]=gf.createPoint(coord);
-	    			pair.setPointA(gf.createMultiPoint(pointArr));
+	    			//Coordinate coord = new Coordinate(markerArray[i].getMarker1().getLng(), markerArray[i].getMarker1().getLat());
 	    			
-	    			coord = new Coordinate(markerArray[i].getMarker2().getLng(), markerArray[i].getMarker2().getLat());
-	    			pointArr[0]=gf.createPoint(coord);
+	    			
+	    			List<LayerPoint> closestPoint=layerPointRepository.findClosest(markerArray[i].getMarker1().getLat(), markerArray[i].getMarker1().getLng(), layer1);
+	    			
+	    			
+	    			Point[] pointArr= new Point[1];
+	    			pointArr[0]=closestPoint.get(0).getPoint();
+	    			pair.setPointA(gf.createMultiPoint(pointArr));
+	    			closestPoint=layerPointRepository.findClosest(markerArray[i].getMarker2().getLat(), markerArray[i].getMarker2().getLng(), layer1);
+	    			
+	    			//coord = new Coordinate(markerArray[i].getMarker2().getLng(), markerArray[i].getMarker2().getLat());
+	    			pointArr[0]=closestPoint.get(0).getPoint();
 	    			pair.setPointB(gf.createMultiPoint(pointArr));
 	    			pair.setProject("project_1");
 	    			pairRepository.save(pair);
