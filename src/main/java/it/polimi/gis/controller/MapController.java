@@ -166,7 +166,7 @@ public class MapController {
 	    			markerArray[i].getMarker1().setLat(closestPoint.get(0).getPoint().getY());
 	    			markerArray[i].getMarker1().setLng(closestPoint.get(0).getPoint().getX());
 	    			
-	    			closestPoint=layerPointRepository.findClosest(String.valueOf(markerArray[i].getMarker2().getLat()), String.valueOf(markerArray[i].getMarker2().getLng()), layer1);
+	    			closestPoint=layerPointRepository.findClosest(String.valueOf(markerArray[i].getMarker2().getLat()), String.valueOf(markerArray[i].getMarker2().getLng()), layer2);
 	    			
 	    			//coord = new Coordinate(markerArray[i].getMarker2().getLng(), markerArray[i].getMarker2().getLat());
 	    			pointArr[0]=closestPoint.get(0).getPoint();
