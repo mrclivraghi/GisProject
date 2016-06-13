@@ -30,7 +30,7 @@ public interface LayerPointRepository
    
     public List<LayerPoint> findByLayerName(String layerName);
     
-    @Query(nativeQuery=true,value="select l from LayerPoint l where layerName=:layerName order by ST_distance(ST_GeomFromText('POINT(:latitude :lng)'),l.point) asc ")
-    public List<LayerPoint> findClosest(@Param("latitude") Double lat,@Param("lng") Double lng,@Param("layerName")String layerName);
+    @Query(nativeQuery=true,value="select l.* from layer_point l where l.layer_name=:layerName order by ST_distance(ST_GeomFromText(cast('POINT(' as varchar) || :lng || cast(' ' as varchar) || :lat || cast(' )' as varchar)),l.point) ")
+    public List<LayerPoint> findClosest(@Param("latitude") String lat,@Param("lng") String lng,@Param("layerName")String layerName);
     
 }
