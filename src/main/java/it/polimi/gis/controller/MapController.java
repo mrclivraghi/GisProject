@@ -157,23 +157,29 @@ public class MapController {
 	    			//Coordinate coord = new Coordinate(markerArray[i].getMarker1().getLng(), markerArray[i].getMarker1().getLat());
 	    			
 	    			
-	    			List<LayerPoint> closestPoint=layerPointRepository.findClosest(markerArray[i].getMarker1().getLat(), markerArray[i].getMarker1().getLng(), layer1);
+	    			List<LayerPoint> closestPoint=layerPointRepository.findClosest(String.valueOf(markerArray[i].getMarker1().getLat()),String.valueOf(markerArray[i].getMarker1().getLng()), layer1);
 	    			
 	    			
 	    			Point[] pointArr= new Point[1];
 	    			pointArr[0]=closestPoint.get(0).getPoint();
 	    			pair.setPointA(gf.createMultiPoint(pointArr));
-	    			closestPoint=layerPointRepository.findClosest(markerArray[i].getMarker2().getLat(), markerArray[i].getMarker2().getLng(), layer1);
+	    			markerArray[i].getMarker1().setLat(closestPoint.get(0).getPoint().getY());
+	    			markerArray[i].getMarker1().setLng(closestPoint.get(0).getPoint().getX());
+	    			
+	    			closestPoint=layerPointRepository.findClosest(String.valueOf(markerArray[i].getMarker2().getLat()), String.valueOf(markerArray[i].getMarker2().getLng()), layer1);
 	    			
 	    			//coord = new Coordinate(markerArray[i].getMarker2().getLng(), markerArray[i].getMarker2().getLat());
 	    			pointArr[0]=closestPoint.get(0).getPoint();
+	    			markerArray[i].getMarker2().setLat(closestPoint.get(0).getPoint().getY());
+	    			markerArray[i].getMarker2().setLng(closestPoint.get(0).getPoint().getX());
+	    			
 	    			pair.setPointB(gf.createMultiPoint(pointArr));
 	    			pair.setProject("project_1");
 	    			pairRepository.save(pair);
 	    		}
 	    	}
 	    	
-	        return ResponseEntity.ok().body(null);
+	        return ResponseEntity.ok().body(markerArray);
 	    }
 	    
 	    
