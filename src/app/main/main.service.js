@@ -32,5 +32,10 @@ function MainService($http)
 		return promise;
 		
 		}
+		
+		this.getPropertyList= function(layerName){
+			var promise= $http.get("http://127.0.0.1:8080/GisProjectServer/configuration?layerName="+layerName);
+			return promise; 
+		}
 }
 })();
