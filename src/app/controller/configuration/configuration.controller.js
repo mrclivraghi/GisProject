@@ -18,6 +18,9 @@
 	
 	vm.associationList={};
 	
+	vm.featureList1;
+	vm.featureList2;
+	
 	
 	function associate()
 	{
@@ -61,6 +64,27 @@
 			return; 
 		});
 	}
+	
+	function findProperty(layerName,id)
+	{
+		mainService.getPropertyList(layerName).then(function successCallback(response) {
+		if (id==2)
+		{
+			vm.featureList2=response.data;
+			$log.debug(vm.featureList2);
+			}
+		else
+			vm.featureList1=response.data;
+		},function errorCallback(response) { 
+			console.log("error");
+			return; 
+		});
+		
+	}
+	
+	findProperty($rootScope.layer1,1);
+	findProperty($rootScope.layer2,2);
+	
 	
 	//getFeatures("OSM_00_4326_attr","TYPE");
 	

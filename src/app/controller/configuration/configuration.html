@@ -50,7 +50,9 @@
 					<div class="col-md-3 col-md-offset-1">
 						<div class="input-group">
 								<span class="input-group-addon" id="basic-addon2"> {{$root.layer1}}</span>
-								<input type="text" ng-model="$root.featureType1" placeholder="FeatureType" class="form-control" style="width:150px">
+								<select ng-model="$root.featureType1" ng-options="item for item in vm.featureList1"
+									style="width:150px"		class="form-control">
+								</select>
 								<span class="input-group-addon" id="basic-addon2" ng-click="vm.getFeatures($root.layer1,$root.featureType1,1)"> Scan</span>
 						</div>
 						
@@ -58,7 +60,9 @@
 					<div class="col-md-3  col-md-offset-1">
 						<div class="input-group">
 								<span class="input-group-addon" id="basic-addon2"> {{$root.layer2}}</span>
-								<input type="text" ng-model="$root.featureType2" placeholder="FeatureType" class="form-control" style="width:150px">
+								<select ng-model="$root.featureType2" ng-options="item for item in vm.featureList2"
+									style="width:150px"		class="form-control">
+								</select>
 								<span class="input-group-addon" id="basic-addon2" ng-click="vm.getFeatures($root.layer2,$root.featureType2,2)"> Scan</span>
 						</div>
 					</div>
