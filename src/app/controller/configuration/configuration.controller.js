@@ -86,9 +86,6 @@
 	findProperty($rootScope.layer2,2);
 	
 	
-	//getFeatures("OSM_00_4326_attr","TYPE");
-	
-	
 	vm.associate=associate;
 	vm.getFeatures=getFeatures;
 	
