@@ -14,9 +14,9 @@
 			
 			<uib-accordion style="height: 250px">
 			
-				<uib-accordion-group heading="Marker{{markerPair.markerPairId}}" ng-repeat="markerPair in vm.markerPairList | limitTo: 9" ng-click="vm.highLightMarker($index+1)">
-					marker1: {{markerPair.marker1.lat | number: 6}}, {{markerPair.marker1.lng | number:6}} <br>
-					marker2: {{markerPair.marker2.lat | number: 6}}, {{markerPair.marker2.lng | number:6}}
+				<uib-accordion-group heading="Selected Pair" is-open="vm.status.open">
+					marker1: {{vm.selectedPair.marker1.lat | number: 6}}, {{vm.selectedPair.marker1.lng | number:6}} <br>
+					marker2: {{vm.selectedPair.marker2.lat | number: 6}}, {{vm.selectedPair.marker2.lng | number:6}}
 				</uib-accordion-group>
 			
 			</uib-accordion>
