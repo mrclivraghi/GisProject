@@ -45,6 +45,8 @@
                             }
 	};
 	vm.layers.overlays[$stateParams.resultLayer]=newLayer;
+	if ($rootScope.secondLayer)
+		vm.layers.overlays['source map']=$rootScope.secondLayer;
 	$rootScope.resultLayer=newLayer;
 	/*function addLayer(mapIndex)
 	{

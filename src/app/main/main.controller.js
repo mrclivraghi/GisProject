@@ -35,17 +35,8 @@
 	{
 	var item=Number($(".leaflet-contextmenu-item").first().text().replace("Remove pair #",""));
 	$(".leaflet-contextmenu-item").remove();
-	console.log("item:"+item);
-	/*delete vm.markers1[(item)];
-	console.log(vm.markerPairList);
-	delete vm.markerPairList[item-1].marker1;
-	if (vm.markerPairList[item-1].marker2==null)
-		vm.markerPairList.splice(item-1,1);
-	console.log(vm.markers1);
-	vm.markers1Count--;*/
 	vm.selectedPair=vm.markerPairList[item-1];
-	console.log(vm.selectedPair);
-	vm.status.open = !vm.status.open
+	vm.status.open = true;
 	
 	}
 	
@@ -55,13 +46,10 @@
 	{
 	var item=Number($(".leaflet-contextmenu-item").text().replace("Remove pair #",""));
 	$(".leaflet-contextmenu-item").remove();
-	console.log("item:"+item);
 	delete vm.markers1[(item)];
-	console.log(vm.markerPairList);
 	delete vm.markerPairList[item-1].marker1;
 	if (vm.markerPairList[item-1].marker2==null)
 		vm.markerPairList.splice(item-1,1);
-	console.log(vm.markers1);
 	vm.markers1Count--;
 	}
 	
@@ -69,7 +57,6 @@
 	{
 		var item=Number($(".leaflet-contextmenu-item").text().replace("Remove pair #",""));
 	$(".leaflet-contextmenu-item").remove();
-	console.log("item:"+item);
 	delete vm.markers2[(item)];
 	delete vm.markerPairList[item-1].marker2;
 	if (vm.markerPairList[item-1].marker1==null)
@@ -84,7 +71,6 @@
 				vm.markerPairList=response.data;
 				for (var i =0; i<vm.markerPairList.length; i++)
 				{
-				console.log(vm.markerPairList[i].marker1);
 				var test=vm.markerPairList[i].marker1.message;
 					vm.markers1[(i+1)]=vm.markerPairList[i].marker1;
 					vm.markers2[(i+1)]=vm.markerPairList[i].marker2;
@@ -138,10 +124,9 @@
 	searchMarker();
 	
 	vm.defaults1={
-		minZoom: 16
+		minZoom: 15
 		
 	};
-	console.log(vm.defaults1);
 	vm.events1= {
             map: {
                 enable: ['drag', 'click','contextmenu.select'],
@@ -155,8 +140,8 @@
 	vm.layerName;
 	vm.layer;
 	
-	vm.center1={ lat:45.494384, lng:9.142647, zoom: 15};
-	vm.center2={ lat:45.494384, lng:9.142647, zoom: 15};
+	vm.center1={ lat:45.494384, lng:9.142647, zoom: 18};
+	vm.center2={ lat:45.494384, lng:9.142647, zoom: 18};
 	vm.centerLat;
 	vm.centerLng;
 	
@@ -193,7 +178,6 @@ $scope.$on('leafletDirectiveMap.map2.click', function(event, args){
 });
 
 $scope.$on('leafletDirectiveMap.map1.contextmenu.select', function(event, args){
-	console.log(event);
 });
    
 	
@@ -228,7 +212,6 @@ $scope.$on('leafletDirectiveMap.map1.contextmenu.select', function(event, args){
 		
 		vm.markerPairList[vm.markers1Count-1].marker1=newMarker;
 		
-		console.log(vm.markerPairList);
 		vm.markers1[vm.markers1Count]=newMarker;
 	}
 	
@@ -281,7 +264,6 @@ $scope.$on('leafletDirectiveMap.map1.contextmenu.select', function(event, args){
 				vm.markerPairList=response.data;
 				for (var i =0; i<vm.markerPairList.length; i++)
 				{
-				console.log(vm.markerPairList[i].marker1);
 				var test=vm.markerPairList[i].marker1.message;
 					vm.markers1[(i+1)]=vm.markerPairList[i].marker1;
 					vm.markers2[(i+1)]=vm.markerPairList[i].marker2;
@@ -383,11 +365,13 @@ $scope.$on('leafletDirectiveMap.map1.contextmenu.select', function(event, args){
 		{
 			vm.layers1.overlays[vm.layerName]=newLayer;
 			$rootScope.layer1=newLayer.name;
+			$rootScope.firstLayer=newLayer;
 			}
 		else
 		{
 			$rootScope.layer2=newLayer.name;
 			vm.layers2.overlays[vm.layerName]=newLayer;
+			$rootScope.secondLayer=newLayer;
 		}
 	
 	}
@@ -407,6 +391,11 @@ $scope.$on('leafletDirectiveMap.map1.contextmenu.select', function(event, args){
 	{
 		mainService.findAll().then(function successCallback(response) {
 			vm.mapFileList=response.data;
+			// set session saved
+			if ($rootScope.firstLayer)
+				vm.layers1.overlays[vm.layerName]=$rootScope.firstLayer;
+			if ($rootScope.secondLayer)
+				vm.layers2.overlays[vm.layerName]=$rootScope.secondLayer;
 			
 		},function errorCallback(response) { 
 			$log.error("Si è verificato un errore");
@@ -418,16 +407,10 @@ $scope.$on('leafletDirectiveMap.map1.contextmenu.select', function(event, args){
 	function runAlgorithm()
 	{
 		MarkerService.send(vm.markerPairList).then(function successCallback(response) {
-				console.log(response);
-				
-				console.log($rootScope.associationList);
-				console.log($rootScope.parameters);
-				
 							MarkerService.runAlgorithm($rootScope.parameters,$rootScope.associationList).then(function successCallback(response) {
 								vm.markerPairList=response.data;
 				for (var i =0; i<vm.markerPairList.length; i++)
 				{
-				console.log(vm.markerPairList[i].marker1);
 				var test=vm.markerPairList[i].marker1.message;
 					vm.markers1[(i+1)]=vm.markerPairList[i].marker1;
 					vm.markers2[(i+1)]=vm.markerPairList[i].marker2;
