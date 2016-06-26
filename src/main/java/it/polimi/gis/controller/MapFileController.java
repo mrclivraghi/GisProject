@@ -7,11 +7,10 @@ import java.util.Date;
 import java.util.List;
 import com.codahale.metrics.annotation.Timed;
 import io.swagger.annotations.ApiOperation;
-import it.anggen.security.SecurityService;
-import it.anggen.service.log.LogEntryService;
 import it.polimi.gis.model.MapFile;
 import it.polimi.gis.service.GeoServerService;
 import it.polimi.gis.service.MapFileService;
+import it.polimi.gis.util.Utility;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -122,7 +121,7 @@ public class MapFileController {
     	if (file.getOriginalFilename().endsWith(".zip")){
     		
 	    	String destination="D:/uploadedFile/GisProject/mapFile/"+sdf.format(now)+"/";
-	    	String filePath = it.anggen.utils.Utility.saveMultipartFile(file, destination);
+	    	String filePath = Utility.saveMultipartFile(file, destination);
 	    	File zipFile= new File(filePath);
 	    	MapFile newMapFile = new MapFile();
 	    	newMapFile.setFilePath(filePath);

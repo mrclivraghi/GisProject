@@ -1,10 +1,6 @@
 
 
-import it.anggen.generation.Generator;
-import it.Application;
 import it.GisProjectApplication;
-import it.anggen.repository.entity.ProjectRepository;
-import it.anggen.repository.field.EnumFieldRepository;
 import it.polimi.gis.service.GeoServerService;
 
 import java.io.File;

@@ -21,10 +21,6 @@ public class GisProjectSecurityConfig
     extends WebSecurityConfigurerAdapter
 {
 
-    @Autowired
-    @Qualifier("userDetailsService")
-    private UserDetailsService userDetailsService;
-
     @Override
     protected void configure(HttpSecurity http)
         throws Exception
@@ -42,13 +38,6 @@ public class GisProjectSecurityConfig
         org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository repository = new org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository();
          repository.setHeaderName("X-XSRF-TOKEN");
         return repository;
-    }
-
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth)
-        throws Exception
-    {
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 
     @Bean

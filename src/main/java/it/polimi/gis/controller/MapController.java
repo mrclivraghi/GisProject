@@ -35,7 +35,6 @@ import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.Point;
 
 import io.swagger.annotations.ApiOperation;
-import it.anggen.searchbean.entity.EntitySearchBean;
 import it.polimi.gis.core.MapTransform;
 import it.polimi.gis.model.LayerPoint;
 import it.polimi.gis.model.Marker;
