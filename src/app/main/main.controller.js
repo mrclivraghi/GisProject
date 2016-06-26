@@ -11,11 +11,13 @@
     var vm = this;
 	
 	vm.showResult=false;
-	vm.markerPairList={};
+	vm.markerPairList=[];
 	vm.selectedPair;
 	
 	vm.markers1={};
 	vm.markers2={};
+	vm.markers1Count=0;
+	vm.markers2Count=0;
 	//status of the accordion menu on the right
 	vm.status = {
 		isCustomHeaderOpen: false,
@@ -151,7 +153,13 @@
 				iconCls: 'Test',
 				hideOnSelect: false,
 				callback: function() { vm.removeMarker1()}
-			}]
+			},{
+							text: 'Select pair #'+vm.markers1Count,
+							icon: 'http://files.softicons.com/download/toolbar-icons/16x16-free-application-icons-by-aha-soft/ico/Application.ico',
+							iconCls: 'Test',
+							hideOnSelect: false,
+							callback: function() { vm.selectPair()}
+						}]
 		};
 		
 		if (!vm.markerPairList[vm.markers1Count-1])
@@ -183,7 +191,13 @@
 				iconCls: 'Test',
 				hideOnSelect: false,
 				callback: function() { vm.removeMarker2()}
-			}]
+			},{
+							text: 'Select pair #'+vm.markers2Count,
+							icon: 'http://files.softicons.com/download/toolbar-icons/16x16-free-application-icons-by-aha-soft/ico/Application.ico',
+							iconCls: 'Test',
+							hideOnSelect: false,
+							callback: function() { vm.selectPair()}
+						}]
 		};
 		
 		
@@ -398,6 +412,7 @@
 		MarkerService.getResult(vm.markerPairList).then(function successCallback(response) {
 				$state.go('result',{resultLayer: response.data});
 		},function errorCallback(response) { 
+		console.log(response);
 			console.log("error");
 			return; 
 		});
