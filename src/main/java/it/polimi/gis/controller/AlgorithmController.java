@@ -83,8 +83,8 @@ public class AlgorithmController {
 	    public ResponseEntity run(
 	        @RequestBody AlgorithmBean algorithmBean) {
 	    	
-	    	String layer1="DBT_00_4326";
-	    	String layer2="OSM_00_4326";
+	    	String layer1=algorithmBean.getLayer1();
+	    	String layer2=algorithmBean.getLayer2();
 	    	
 	    	mapTransform.setParameters(createParametersMap(algorithmBean));
 	    	mapTransform.setSemantics(createAssociationMap(algorithmBean));
