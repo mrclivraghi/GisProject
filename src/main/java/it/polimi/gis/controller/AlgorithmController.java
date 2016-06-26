@@ -37,15 +37,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.codahale.metrics.annotation.Timed;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.CoordinateSequence;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.Point;
 
-import io.swagger.annotations.ApiOperation;
-import it.anggen.searchbean.entity.EntitySearchBean;
 import it.polimi.gis.core.MapTransform;
 import it.polimi.gis.model.MapFile;
 import it.polimi.gis.model.Marker;
@@ -83,8 +80,8 @@ public class AlgorithmController {
 	    public ResponseEntity run(
 	        @RequestBody AlgorithmBean algorithmBean) {
 	    	
-	    	String layer1="DBT_00_4326";
-	    	String layer2="OSM_00_4326";
+	    	String layer1=algorithmBean.getLayer1();
+	    	String layer2=algorithmBean.getLayer2();
 	    	
 	    	mapTransform.setParameters(createParametersMap(algorithmBean));
 	    	mapTransform.setSemantics(createAssociationMap(algorithmBean));

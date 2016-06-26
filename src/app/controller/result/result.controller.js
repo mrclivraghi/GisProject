@@ -12,10 +12,7 @@
 	
 	
 	vm.defaults={
-	//crs: 'EPSG3857',
 	minZoom: 16
-		//srs: 'EPSG:404000'
-		
 	};
 	
 	vm.center={ lat:45.494384, lng:9.142647, zoom: 15};
@@ -48,41 +45,7 @@
 	if ($rootScope.secondLayer)
 		vm.layers.overlays['source map']=$rootScope.secondLayer;
 	$rootScope.resultLayer=newLayer;
-	/*function addLayer(mapIndex)
-	{
-		var newLayer;
-		
-		if (vm.selectedMapFile==null || vm.selectedMapFile==null)
-		{
-			
-			newLayer= {
-							name: vm.layerName,
-                            type: 'wms',
-                            visible: true,
-                            url: vm.wmsUrl,
-                            layerParams: {
-                                layers: vm.layer,
-                                format: 'image/png',
-                                transparent: true
-                            }
-			
-			};
-		
-		} else
-		{
-				
-			
-			};
-			
-		}
-		
-		
-		if (mapIndex==1)
-			vm.layers1.overlays[vm.layerName]=newLayer;
-		else
-			vm.layers2.overlays[vm.layerName]=newLayer;
 	
-	}*/
 	
 	vm.statistics;
 	

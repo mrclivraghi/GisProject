@@ -5,6 +5,10 @@ public class AlgorithmBean {
 	
 	private ParameterObject parameters;
 	
+	private String layer1;
+	
+	private String layer2;
+	
 	public AssociationItem[] getAssociationList() {
 		return associationList;
 	}
@@ -16,5 +20,17 @@ public class AlgorithmBean {
 	}
 	public void setParameters(ParameterObject parameters) {
 		this.parameters = parameters;
+	}
+	public String getLayer2() {
+		return layer2;
+	}
+	public void setLayer2(String layer2) {
+		this.layer2 = layer2;
+	}
+	public String getLayer1() {
+		return layer1;
+	}
+	public void setLayer1(String layer1) {
+		this.layer1 = layer1;
 	}
 }

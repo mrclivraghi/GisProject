@@ -20,8 +20,6 @@ public class GisProjectConfig {
     private String formatSql;
     @Value("${hibernate.show_sql}")
     private String showSql;
-    @Value("${hibernate.cache.region.factory_class}")
-    private String cacheRegion;
     
     
     @Value("${datasource.driver.class.name}")
@@ -52,7 +50,6 @@ public class GisProjectConfig {
         java.util.Properties  prop = new java.util.Properties();
          prop.put("hibernate.format_sql", formatSql);
          prop.put("hibernate.show_sql", showSql);
-         prop.put("hibernate.cache.region.factory_class", cacheRegion);
          return prop;
     }
 
