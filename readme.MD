@@ -35,3 +35,11 @@ There is also the possibility to add the project to a separate server instance. 
 
 The client application is managed by gulp. Developer need to move to the project folder and run the command “gulp serve”. This will run the client application on the port 3000, accessible via web.
 Gulp support a deploy and build system, runnable with “gulp deploy” and “gulp build”. In case of deploy developer needs to properly configure his production environment in /gulp/deploy.js file.
+
+#### Non expert users guide
+
+- Install postgres with the postgis extension under the default port 5432 and default user-pwd. Create "gis_db" database.
+- Copy /dist/GisProject-0.0.1.war under your /tomcat/webapps folder and run your server
+- Make sure your GeoServer instance is running on the 8081 port
+- Open /dist/index.html to gain access to the application
+
