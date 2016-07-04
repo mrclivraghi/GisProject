@@ -17,15 +17,16 @@
 	vm.selectionValue=[];
 	
 	vm.associationList={};
-	
+	vm.associationCount=0;
 	vm.featureList1;
 	vm.featureList2;
 	
 	
 	function associate()
 	{
+		vm.associationCount++;
 		if (vm.associationName==null || vm.associationName==undefined)
-			vm.associationName="Default";
+			vm.associationName="Association"+(vm.associationCount);
 		
 		vm.associationList[vm.associationName]={};
 		vm.associationList[vm.associationName].name=vm.associationName;
@@ -39,7 +40,7 @@
 		}
 		
 		$rootScope.associationList=vm.associationList;
-		console.log($rootScope.associationList);
+		vm.associationName=null;
 	
 	}
 	

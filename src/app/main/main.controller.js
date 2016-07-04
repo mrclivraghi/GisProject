@@ -41,7 +41,7 @@
 	//remove marker 1
 	function removeMarker1(e)
 	{
-		var item=Number($(".leaflet-contextmenu-item").text().replace("Remove pair #",""));
+		var item=Number($(".leaflet-contextmenu-item").first().text().replace("Remove pair #",""));
 		$(".leaflet-contextmenu-item").remove();
 		delete vm.markers1[(item)];
 		delete vm.markerPairList[item-1].marker1;
@@ -52,7 +52,7 @@
 	//remove marker 2
 	function removeMarker2(e)
 	{
-		var item=Number($(".leaflet-contextmenu-item").text().replace("Remove pair #",""));
+		var item=Number($(".leaflet-contextmenu-item").first().text().replace("Remove pair #",""));
 		$(".leaflet-contextmenu-item").remove();
 		delete vm.markers2[(item)];
 		delete vm.markerPairList[item-1].marker2;
@@ -96,8 +96,8 @@
 	vm.wmsUrl;
 	vm.layerName;
 	vm.layer;
-	vm.center1={ lat:45.494384, lng:9.142647, zoom: 18};
-	vm.center2={ lat:45.494384, lng:9.142647, zoom: 18};
+	vm.center1={ lat:45.481488, lng: 9.167520, zoom: 18};
+	vm.center2={ lat:45.481488, lng: 9.167520, zoom: 18};
 	vm.centerLat;
 	vm.centerLng;
 	
@@ -361,7 +361,10 @@
 	// manage a pair by adding two markers on the two maps
 	function manageMarkerPairItem(i)
 	{
-			var test=vm.markerPairList[i].marker1.message;
+					if (vm.markerPairList[i].marker1==undefined || vm.markerPairList[i].marker1 == null 
+						|| vm.markerPairList[i].marker2==undefined || vm.markerPairList[i].marker2==null)
+						return;
+					var test=vm.markerPairList[i].marker1.message;
 					vm.markers1[(i+1)]=vm.markerPairList[i].marker1;
 					vm.markers2[(i+1)]=vm.markerPairList[i].marker2;
 					vm.markers1[(i+1)].focus=false;
